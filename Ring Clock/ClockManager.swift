@@ -87,57 +87,105 @@ class ClockManager: ObservableObject {
     private let ghostMinColor: Color = Color(NSColor(red: 0.4, green: 0.0, blue: 0.6, alpha: 0.7)) // Deep purple
     private let ghostSecColor: Color = Color(NSColor(red: 0.0, green: 1.0, blue: 0.4, alpha: 0.6)) // Neon green
 
-    // Custom color properties
+    /// Custom color properties with improved error handling
     var customHourColor: Color {
         get {
-            if let data = Data(base64Encoded: customHourColorData),
-               let nsColor = try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSColor.self, from: data) {
-                return Color(nsColor)
+            guard !customHourColorData.isEmpty else {
+                return moonHourColor // Default fallback
             }
-            return moonHourColor // Default fallback
+
+            guard let data = Data(base64Encoded: customHourColorData) else {
+                print("Warning: Invalid base64 data for customHourColor")
+                return moonHourColor
+            }
+
+            do {
+                guard let nsColor = try NSKeyedUnarchiver.unarchivedObject(ofClass: NSColor.self, from: data) else {
+                    print("Warning: Failed to unarchive NSColor for customHourColor")
+                    return moonHourColor
+                }
+                return Color(nsColor)
+            } catch {
+                print("Error: Failed to decode customHourColor: \(error.localizedDescription)")
+                return moonHourColor
+            }
         }
         set {
             do {
-                let data = try NSKeyedArchiver.archivedData(withRootObject: NSColor(newValue), requiringSecureCoding: false)
+                let nsColor = NSColor(newValue)
+                let data = try NSKeyedArchiver.archivedData(withRootObject: nsColor, requiringSecureCoding: false)
                 customHourColorData = data.base64EncodedString()
             } catch {
-                // Handle error silently
+                print("Error: Failed to encode customHourColor: \(error.localizedDescription)")
+                customHourColorData = "" // Reset to empty on error
             }
         }
     }
 
     var customMinColor: Color {
         get {
-            if let data = Data(base64Encoded: customMinColorData),
-               let nsColor = try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSColor.self, from: data) {
-                return Color(nsColor)
+            guard !customMinColorData.isEmpty else {
+                return moonMinColor // Default fallback
             }
-            return moonMinColor // Default fallback
+
+            guard let data = Data(base64Encoded: customMinColorData) else {
+                print("Warning: Invalid base64 data for customMinColor")
+                return moonMinColor
+            }
+
+            do {
+                guard let nsColor = try NSKeyedUnarchiver.unarchivedObject(ofClass: NSColor.self, from: data) else {
+                    print("Warning: Failed to unarchive NSColor for customMinColor")
+                    return moonMinColor
+                }
+                return Color(nsColor)
+            } catch {
+                print("Error: Failed to decode customMinColor: \(error.localizedDescription)")
+                return moonMinColor
+            }
         }
         set {
             do {
-                let data = try NSKeyedArchiver.archivedData(withRootObject: NSColor(newValue), requiringSecureCoding: false)
+                let nsColor = NSColor(newValue)
+                let data = try NSKeyedArchiver.archivedData(withRootObject: nsColor, requiringSecureCoding: false)
                 customMinColorData = data.base64EncodedString()
             } catch {
-                // Handle error silently
+                print("Error: Failed to encode customMinColor: \(error.localizedDescription)")
+                customMinColorData = "" // Reset to empty on error
             }
         }
     }
 
     var customSecColor: Color {
         get {
-            if let data = Data(base64Encoded: customSecColorData),
-               let nsColor = try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSColor.self, from: data) {
-                return Color(nsColor)
+            guard !customSecColorData.isEmpty else {
+                return moonSecColor // Default fallback
             }
-            return moonSecColor // Default fallback
+
+            guard let data = Data(base64Encoded: customSecColorData) else {
+                print("Warning: Invalid base64 data for customSecColor")
+                return moonSecColor
+            }
+
+            do {
+                guard let nsColor = try NSKeyedUnarchiver.unarchivedObject(ofClass: NSColor.self, from: data) else {
+                    print("Warning: Failed to unarchive NSColor for customSecColor")
+                    return moonSecColor
+                }
+                return Color(nsColor)
+            } catch {
+                print("Error: Failed to decode customSecColor: \(error.localizedDescription)")
+                return moonSecColor
+            }
         }
         set {
             do {
-                let data = try NSKeyedArchiver.archivedData(withRootObject: NSColor(newValue), requiringSecureCoding: false)
+                let nsColor = NSColor(newValue)
+                let data = try NSKeyedArchiver.archivedData(withRootObject: nsColor, requiringSecureCoding: false)
                 customSecColorData = data.base64EncodedString()
             } catch {
-                // Handle error silently
+                print("Error: Failed to encode customSecColor: \(error.localizedDescription)")
+                customSecColorData = "" // Reset to empty on error
             }
         }
     }

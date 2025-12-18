@@ -1,8 +1,19 @@
 version: '3'
 
 tasks:
+  format:
+    desc: Format Swift code using swift-format
+    cmds:
+      - swift-format format --in-place Ring\ Clock/*.swift || echo "swift-format not available or completed with warnings"
+
+  lint:
+    desc: Lint Swift code using SwiftLint
+    cmds:
+      - swiftlint lint Ring\ Clock/*.swift || echo "SwiftLint not available or completed with warnings"
+
   build:
     desc: Build the Ring Clock app in Debug configuration
+    deps: [format, lint]
     cmds:
       - xcodebuild -project "Ring Clock.xcodeproj" -scheme "Ring Clock" -configuration Debug SYMROOT=build build
 
@@ -24,6 +35,7 @@ tasks:
 
   build-release:
     desc: Build the Ring Clock app in Release configuration
+    deps: [format, lint]
     cmds:
       - xcodebuild -project "Ring Clock.xcodeproj" -scheme "Ring Clock" -configuration Release SYMROOT=build build
 
@@ -32,3 +44,9 @@ tasks:
     deps: [build-release]
     cmds:
       - open build/Release/Ring\ Clock.app
+
+  check:
+    desc: Run format and lint checks without modifying files
+    cmds:
+      - swift-format lint Ring\ Clock/*.swift || echo "swift-format issues found"
+      - swiftlint lint Ring\ Clock/*.swift || echo "SwiftLint issues found"
