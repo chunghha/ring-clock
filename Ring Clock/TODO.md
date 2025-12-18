@@ -26,7 +26,7 @@
   - Expand settings with ring thickness and opacity controls
   - Improve settings window layout and usability
 
-- [ ] **Clock Styles**
+- [x] **Clock Styles**
   - Add 12-hour vs 24-hour display option
   - Option for digital time overlay on rings
   - Font customization for digital display

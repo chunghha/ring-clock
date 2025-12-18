@@ -34,6 +34,17 @@ struct SettingsView: View {
                 }
             }
 
+            Section(header: Text("Clock Style")) {
+                Toggle("24-hour format", isOn: $clock.use24HourFormat)
+                Toggle("Show digital time", isOn: $clock.showDigitalTime)
+
+                if clock.showDigitalTime {
+                    Slider(value: $clock.digitalFontSize, in: 16...48, step: 2) {
+                        Text("Font Size: \(Int(clock.digitalFontSize))")
+                    }
+                }
+            }
+
             Section(header: Text("Custom Themes")) {
                 HStack {
                     TextField("Theme name", text: $newThemeName)

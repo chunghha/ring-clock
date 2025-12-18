@@ -25,6 +25,16 @@ struct ContentView: View {
                 .frame(width: 240, height: 240)
                 .accessibilityLabel("Hour ring")
                 .accessibilityValue("\(clock.currentHour) o'clock")
+
+            // Digital time overlay (optional)
+            if clock.showDigitalTime {
+                Text(clock.digitalTimeString)
+                    .font(.system(size: clock.digitalFontSize, weight: .bold, design: .monospaced))
+                    .foregroundColor(.white)
+                    .shadow(color: .black.opacity(0.8), radius: 4, x: 0, y: 0)
+                    .accessibilityLabel("Digital time display")
+                    .accessibilityValue(clock.digitalTimeString)
+            }
         }
         .padding(40)
         .opacity(clock.windowOpacity)
