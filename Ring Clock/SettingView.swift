@@ -40,46 +40,70 @@ struct SettingsView: View {
 
                     HStack(spacing: 20) {
                         // Base Theme Preview
-                        VStack(spacing: 4) {
-                            Text("Base").font(.caption)
-                            ZStack {
-                                TimeRing(progress: 0.5, color: Color(red: 0.2, green: 0.6, blue: 0.8), thickness: 20)
-                                    .frame(width: 60, height: 60)
-                                TimeRing(progress: 0.3, color: Color(red: 0.8, green: 0.4, blue: 0.2), thickness: 20)
-                                    .frame(width: 45, height: 45)
-                                TimeRing(progress: 0.8, color: Color(red: 0.4, green: 0.8, blue: 0.4), thickness: 20)
-                                    .frame(width: 30, height: 30)
+                        Button(action: { clock.colorScheme = "base" }) {
+                            VStack(spacing: 4) {
+                                Text("Base").font(.caption)
+                                ZStack {
+                                    TimeRing(progress: 0.5, color: Color(red: 0.2, green: 0.6, blue: 0.8), thickness: 20)
+                                        .frame(width: 60, height: 60)
+                                    TimeRing(progress: 0.3, color: Color(red: 0.8, green: 0.4, blue: 0.2), thickness: 20)
+                                        .frame(width: 45, height: 45)
+                                    TimeRing(progress: 0.8, color: Color(red: 0.4, green: 0.8, blue: 0.4), thickness: 20)
+                                        .frame(width: 30, height: 30)
+                                }
+                                .frame(width: 70, height: 70)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(clock.colorScheme == "base" ? Color.blue : Color.clear, lineWidth: 2)
+                                )
+                                .padding(4)
                             }
-                            .frame(width: 70, height: 70)
                         }
+                        .buttonStyle(.plain)
 
                         // Moon Theme Preview
-                        VStack(spacing: 4) {
-                            Text("Moon").font(.caption)
-                            ZStack {
-                                TimeRing(progress: 0.5, color: Color(red: 0.9, green: 0.7, blue: 0.1, opacity: 0.6), thickness: 20)
-                                    .frame(width: 60, height: 60)
-                                TimeRing(progress: 0.3, color: Color(red: 0.7, green: 0.4, blue: 0.1, opacity: 0.7), thickness: 20)
-                                    .frame(width: 45, height: 45)
-                                TimeRing(progress: 0.8, color: Color(red: 0.1, green: 0.2, blue: 0.5, opacity: 0.5), thickness: 20)
-                                    .frame(width: 30, height: 30)
+                        Button(action: { clock.colorScheme = "moon" }) {
+                            VStack(spacing: 4) {
+                                Text("Moon").font(.caption)
+                                ZStack {
+                                    TimeRing(progress: 0.5, color: Color(red: 0.9, green: 0.7, blue: 0.1, opacity: 0.6), thickness: 20)
+                                        .frame(width: 60, height: 60)
+                                    TimeRing(progress: 0.3, color: Color(red: 0.7, green: 0.4, blue: 0.1, opacity: 0.7), thickness: 20)
+                                        .frame(width: 45, height: 45)
+                                    TimeRing(progress: 0.8, color: Color(red: 0.1, green: 0.2, blue: 0.5, opacity: 0.5), thickness: 20)
+                                        .frame(width: 30, height: 30)
+                                }
+                                .frame(width: 70, height: 70)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(clock.colorScheme == "moon" ? Color.blue : Color.clear, lineWidth: 2)
+                                )
+                                .padding(4)
                             }
-                            .frame(width: 70, height: 70)
                         }
+                        .buttonStyle(.plain)
 
                         // Ghost Theme Preview
-                        VStack(spacing: 4) {
-                            Text("Ghost").font(.caption)
-                            ZStack {
-                                TimeRing(progress: 0.5, color: Color(red: 0.0, green: 0.8, blue: 0.8, opacity: 0.8), thickness: 20)
-                                    .frame(width: 60, height: 60)
-                                TimeRing(progress: 0.3, color: Color(red: 0.0, green: 1.0, blue: 0.4, opacity: 0.6), thickness: 20)
-                                    .frame(width: 45, height: 45)
-                                TimeRing(progress: 0.8, color: Color(red: 0.4, green: 0.0, blue: 0.6, opacity: 0.7), thickness: 20)
-                                    .frame(width: 30, height: 30)
+                        Button(action: { clock.colorScheme = "ghost" }) {
+                            VStack(spacing: 4) {
+                                Text("Ghost").font(.caption)
+                                ZStack {
+                                    TimeRing(progress: 0.5, color: Color(red: 0.0, green: 0.8, blue: 0.8, opacity: 0.8), thickness: 20)
+                                        .frame(width: 60, height: 60)
+                                    TimeRing(progress: 0.3, color: Color(red: 0.0, green: 1.0, blue: 0.4, opacity: 0.6), thickness: 20)
+                                        .frame(width: 45, height: 45)
+                                    TimeRing(progress: 0.8, color: Color(red: 0.4, green: 0.0, blue: 0.6, opacity: 0.7), thickness: 20)
+                                        .frame(width: 30, height: 30)
+                                }
+                                .frame(width: 70, height: 70)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(clock.colorScheme == "ghost" ? Color.blue : Color.clear, lineWidth: 2)
+                                )
+                                .padding(4)
                             }
-                            .frame(width: 70, height: 70)
                         }
+                        .buttonStyle(.plain)
                     }
                 }
                 .padding(.top, 10)
