@@ -15,7 +15,7 @@
 
 ## Medium Priority (Feature Enhancements)
 
-- [ ] **Custom Color Themes**
+- [x] **Custom Color Themes**
   - Add color picker controls in SettingsView for custom hour/minute/second colors
   - Store custom colors in AppStorage
   - Allow saving/loading multiple custom themes
