@@ -7,7 +7,7 @@ class ClockManager: ObservableObject {
     @Published var second: Double = 0
     
     // User Preferences
-    @AppStorage("colorScheme") var colorScheme: String = "moon"
+    @AppStorage("colorScheme") var colorScheme: String = "ghost"
     @AppStorage("showSeconds") var showSeconds: Bool = false
     @AppStorage("ringThickness") var ringThickness: Double = 50
     @AppStorage("windowOpacity") var windowOpacity: Double = 1.0
