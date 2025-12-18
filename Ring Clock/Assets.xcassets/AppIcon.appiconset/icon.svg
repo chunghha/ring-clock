@@ -1,0 +1,20 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" fill="black"/>
+  <circle cx="256" cy="256" r="200" fill="none" stroke="white" stroke-width="8"/>
+  <!-- Hour markers -->
+  <line x1="256" y1="56" x2="256" y2="76" stroke="white" stroke-width="4"/>
+  <line x1="256" y1="436" x2="256" y2="456" stroke="white" stroke-width="4"/>
+  <line x1="56" y1="256" x2="76" y2="256" stroke="white" stroke-width="4"/>
+  <line x1="436" y1="256" x2="456" y2="256" stroke="white" stroke-width="4"/>
+  <!-- Minute markers -->
+  <line x1="256" y1="46" x2="256" y2="66" stroke="white" stroke-width="2"/>
+  <line x1="256" y1="446" x2="256" y2="466" stroke="white" stroke-width="2"/>
+  <line x1="46" y1="256" x2="66" y2="256" stroke="white" stroke-width="2"/>
+  <line x1="446" y1="256" x2="466" y2="256" stroke="white" stroke-width="2"/>
+  <!-- Hour hand (1:15) -->
+  <line x1="256" y1="256" x2="320" y2="200" stroke="white" stroke-width="6" stroke-linecap="round"/>
+  <!-- Minute hand (15 minutes) -->
+  <line x1="256" y1="256" x2="356" y2="156" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <!-- Second hand (30 seconds) -->
+  <line x1="256" y1="256" x2="156" y2="256" stroke="red" stroke-width="2" stroke-linecap="round"/>
+</svg>
