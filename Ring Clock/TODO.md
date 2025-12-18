@@ -33,7 +33,7 @@
 
 ## Low Priority (Quality and Distribution)
 
-- [ ] **Time Zone Support**
+- [x] **Time Zone Support**
   - Add time zone selector in settings
   - Display multiple time zone clocks simultaneously
 

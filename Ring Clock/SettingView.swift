@@ -3,6 +3,21 @@ import SwiftUI
 struct SettingsView: View {
     @EnvironmentObject var clock: ClockManager
     @State private var newThemeName: String = ""
+    @State private var selectedTimeZone: String = TimeZone.current.identifier
+    @State private var showingTimeZonePicker = false
+
+    private let commonTimeZones = [
+        "America/New_York": "Eastern Time",
+        "America/Chicago": "Central Time",
+        "America/Denver": "Mountain Time",
+        "America/Los_Angeles": "Pacific Time",
+        "Europe/London": "London",
+        "Europe/Paris": "Paris",
+        "Europe/Berlin": "Berlin",
+        "Asia/Tokyo": "Tokyo",
+        "Asia/Shanghai": "Shanghai",
+        "Australia/Sydney": "Sydney"
+    ]
 
     var body: some View {
         Form {
@@ -42,6 +57,46 @@ struct SettingsView: View {
                     Slider(value: $clock.digitalFontSize, in: 16...48, step: 2) {
                         Text("Font Size: \(Int(clock.digitalFontSize))")
                     }
+                }
+            }
+
+            Section(header: Text("Time Zones")) {
+                Text("Multiple Time Zones: \(clock.selectedTimeZones.count)")
+                    .font(.subheadline)
+
+                if clock.selectedTimeZones.count > 1 {
+                    ForEach(clock.selectedTimeZones, id: \.self) { zoneId in
+                        HStack {
+                            Text("\(zoneId) (\(commonTimeZones[zoneId] ?? "Unknown"))")
+                            Spacer()
+                            if clock.selectedTimeZones.count > 1 {
+                                Button(action: {
+                                    clock.removeTimeZone(zoneId)
+                                }) {
+                                    Image(systemName: "minus.circle.fill")
+                                        .foregroundColor(.red)
+                                }
+                                .buttonStyle(.borderless)
+                            }
+                        }
+                    }
+                }
+
+                HStack {
+                    Picker("Add Time Zone", selection: $selectedTimeZone) {
+                        ForEach(Array(commonTimeZones.keys.sorted()), id: \.self) { zoneId in
+                            Text("\(zoneId) (\(commonTimeZones[zoneId]!))")
+                                .tag(zoneId)
+                        }
+                    }
+                    .pickerStyle(.menu)
+
+                    Button("Add") {
+                        if !clock.selectedTimeZones.contains(selectedTimeZone) {
+                            clock.addTimeZone(selectedTimeZone)
+                        }
+                    }
+                    .disabled(clock.selectedTimeZones.contains(selectedTimeZone))
                 }
             }
 

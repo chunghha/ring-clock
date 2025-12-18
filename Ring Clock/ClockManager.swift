@@ -17,6 +17,10 @@ class ClockManager: ObservableObject {
     @AppStorage("showDigitalTime") var showDigitalTime: Bool = false
     @AppStorage("digitalFontSize") var digitalFontSize: Double = 24
 
+    // Time zone preferences
+    @AppStorage("selectedTimeZones") var selectedTimeZonesData: String = "[]"
+    @AppStorage("primaryTimeZone") var primaryTimeZone: String = TimeZone.current.identifier
+
     // Custom theme colors
     @AppStorage("customHourColor") var customHourColorData: String = ""
     @AppStorage("customMinColor") var customMinColorData: String = ""
@@ -24,6 +28,44 @@ class ClockManager: ObservableObject {
 
     // Saved themes (stored as JSON)
     @AppStorage("savedThemes") var savedThemesData: String = "{}"
+
+    // Time zone management
+    var selectedTimeZones: [String] {
+        get {
+            if let data = selectedTimeZonesData.data(using: .utf8),
+               let timeZones = try? JSONDecoder().decode([String].self, from: data) {
+                return timeZones
+            }
+            return [TimeZone.current.identifier] // Default to current time zone
+        }
+        set {
+            if let data = try? JSONEncoder().encode(newValue),
+               let jsonString = String(data: data, encoding: .utf8) {
+                selectedTimeZonesData = jsonString
+            }
+        }
+    }
+
+    func addTimeZone(_ identifier: String) {
+        var zones = selectedTimeZones
+        if !zones.contains(identifier) {
+            zones.append(identifier)
+            selectedTimeZones = zones
+        }
+    }
+
+    func removeTimeZone(_ identifier: String) {
+        var zones = selectedTimeZones
+        zones.removeAll { $0 == identifier }
+        selectedTimeZones = zones
+    }
+
+    func timeForZone(_ identifier: String) -> Date {
+        let zone = TimeZone(identifier: identifier) ?? TimeZone.current
+        let now = Date()
+        let offset = TimeInterval(zone.secondsFromGMT(for: now))
+        return now.addingTimeInterval(offset)
+    }
 
     // Basic color scheme
     private let basicHourColor: Color = Color(NSColor(red: 0.4, green: 0.6, blue: 0.9, alpha: 1.0))
@@ -280,6 +322,23 @@ class ClockManager: ObservableObject {
 
     func updateTime() {
         let calendar = Calendar.current
+        let now = Date()
+        let components = calendar.dateComponents([.hour, .minute, .second, .nanosecond], from: now)
+
+        // Calculate smooth movement
+        let nsecs = Double(components.nanosecond ?? 0) / 1_000_000_000
+        let secs = Double(components.second ?? 0) + nsecs
+        let mins = Double(components.minute ?? 0) + (secs / 60.0)
+        let hrs = Double(components.hour ?? 0 % 12) + (mins / 60.0)
+
+        self.second = secs / 60.0
+        self.minute = mins / 60.0
+        self.hour = (hrs.truncatingRemainder(dividingBy: 12)) / 12.0
+    }
+
+    func updateTimeForZone(_ timeZone: TimeZone) {
+        var calendar = Calendar.current
+        calendar.timeZone = timeZone
         let now = Date()
         let components = calendar.dateComponents([.hour, .minute, .second, .nanosecond], from: now)
 
