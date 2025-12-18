@@ -71,12 +71,41 @@ struct SettingsView: View {
                         VStack(spacing: 4) {
                             Text("Ghost").font(.caption)
                             ZStack {
-                                TimeRing(progress: 0.5, color: Color(red: 0.0, green: 0.8, blue: 0.8, opacity: 0.8), thickness: 20)
-                                    .frame(width: 60, height: 60)
-                                TimeRing(progress: 0.3, color: Color(red: 0.4, green: 0.0, blue: 0.6, opacity: 0.7), thickness: 20)
-                                    .frame(width: 45, height: 45)
-                                TimeRing(progress: 0.8, color: Color(red: 0.0, green: 1.0, blue: 0.4, opacity: 0.6), thickness: 20)
-                                    .frame(width: 30, height: 30)
+                                // Hour ring (outermost)
+                                ZStack {
+                                    Circle()
+                                        .stroke(Color(red: 0.0, green: 0.8, blue: 0.8, opacity: 0.08), lineWidth: 50)
+                                    Circle()
+                                        .trim(from: 0, to: 0.5)
+                                        .stroke(Color(red: 0.0, green: 0.8, blue: 0.8, opacity: 0.8), style: StrokeStyle(lineWidth: 42, lineCap: .butt))
+                                        .rotationEffect(.degrees(-90))
+                                        .shadow(color: Color(red: 0.0, green: 0.8, blue: 0.8, opacity: 0.48), radius: 8, x: 0, y: 0)
+                                }
+                                .frame(width: 60, height: 60)
+
+                                // Minute ring (middle)
+                                ZStack {
+                                    Circle()
+                                        .stroke(Color(red: 0.4, green: 0.0, blue: 0.6, opacity: 0.07), lineWidth: 50)
+                                    Circle()
+                                        .trim(from: 0, to: 0.3)
+                                        .stroke(Color(red: 0.4, green: 0.0, blue: 0.6, opacity: 0.7), style: StrokeStyle(lineWidth: 42, lineCap: .butt))
+                                        .rotationEffect(.degrees(-90))
+                                        .shadow(color: Color(red: 0.4, green: 0.0, blue: 0.6, opacity: 0.42), radius: 8, x: 0, y: 0)
+                                }
+                                .frame(width: 45, height: 45)
+
+                                // Second ring (innermost)
+                                ZStack {
+                                    Circle()
+                                        .stroke(Color(red: 0.0, green: 1.0, blue: 0.4, opacity: 0.06), lineWidth: 50)
+                                    Circle()
+                                        .trim(from: 0, to: 0.8)
+                                        .stroke(Color(red: 0.0, green: 1.0, blue: 0.4, opacity: 0.6), style: StrokeStyle(lineWidth: 42, lineCap: .butt))
+                                        .rotationEffect(.degrees(-90))
+                                        .shadow(color: Color(red: 0.0, green: 1.0, blue: 0.4, opacity: 0.36), radius: 8, x: 0, y: 0)
+                                }
+                                .frame(width: 30, height: 30)
                             }
                             .frame(width: 70, height: 70)
                         }
