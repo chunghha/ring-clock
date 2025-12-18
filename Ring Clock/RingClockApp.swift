@@ -1,7 +1,78 @@
 import SwiftUI
 
+class AppDelegate: NSObject, NSApplicationDelegate {
+    var statusItem: NSStatusItem?
+    var clockWindow: NSWindow?
+
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        setupStatusBar()
+    }
+
+    func setupStatusBar() {
+        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
+
+        if let button = statusItem?.button {
+            // Use a simple clock emoji as icon, or we could load an image
+            button.title = "🕐"
+            button.action = #selector(statusBarButtonClicked)
+            button.target = self
+        }
+
+        let menu = NSMenu()
+
+        let showHideItem = NSMenuItem(title: "Show/Hide Clock", action: #selector(toggleClockWindow), keyEquivalent: "")
+        showHideItem.target = self
+        menu.addItem(showHideItem)
+
+        menu.addItem(NSMenuItem.separator())
+
+        let settingsItem = NSMenuItem(title: "Settings...", action: #selector(openSettings), keyEquivalent: ",")
+        settingsItem.keyEquivalentModifierMask = .command
+        settingsItem.target = self
+        menu.addItem(settingsItem)
+
+        menu.addItem(NSMenuItem.separator())
+
+        let quitItem = NSMenuItem(title: "Quit Ring Clock", action: #selector(quitApp), keyEquivalent: "q")
+        quitItem.keyEquivalentModifierMask = .command
+        quitItem.target = self
+        menu.addItem(quitItem)
+
+        statusItem?.menu = menu
+    }
+
+    @objc func statusBarButtonClicked() {
+        // Show menu when clicked
+        statusItem?.button?.performClick(nil)
+    }
+
+    @objc func toggleClockWindow() {
+        if let window = clockWindow {
+            if window.isVisible {
+                window.orderOut(nil)
+            } else {
+                window.orderFront(nil)
+                NSApp.activate(ignoringOtherApps: true)
+            }
+        }
+    }
+
+    @objc func openSettings() {
+        NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+    }
+
+    @objc func quitApp() {
+        NSApp.terminate(nil)
+    }
+
+    func setClockWindow(_ window: NSWindow) {
+        clockWindow = window
+    }
+}
+
 @main
 struct RingClockApp: App {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @StateObject private var clockManager = ClockManager()
 
     var body: some Scene {
@@ -9,7 +80,7 @@ struct RingClockApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(clockManager)
-                .background(TransparentWindowView())
+                .background(TransparentWindowView(appDelegate: appDelegate))
         }
         .windowStyle(.hiddenTitleBar)
         .windowResizability(.contentSize)
@@ -32,6 +103,8 @@ struct RingClockApp: App {
 
 // Helper to make the window transparent
 struct TransparentWindowView: NSViewRepresentable {
+    let appDelegate: AppDelegate
+
     func makeNSView(context: Context) -> NSView {
         let view = NSView()
         DispatchQueue.main.async {
@@ -51,6 +124,9 @@ struct TransparentWindowView: NSViewRepresentable {
                     let newOrigin = NSPoint(x: screenFrame.maxX - windowFrame.width - 20, y: screenFrame.maxY - windowFrame.height)
                     window.setFrameOrigin(newOrigin)
                 }
+
+                // Register window with status bar
+                appDelegate.setClockWindow(window)
             }
         }
         return view
