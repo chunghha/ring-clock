@@ -60,13 +60,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @objc func openSettings() {
-        // For SwiftUI Settings scenes, we need to use the settings window controller
-        if let settingsWindow = NSApp.windows.first(where: { $0.frameAutosaveName == "com_apple_SwiftUI_Settings_window" }) {
-            settingsWindow.makeKeyAndOrderFront(nil)
-            NSApp.activate(ignoringOtherApps: true)
-        } else {
-            // Fallback: try to open settings using the standard action
-            NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+        // For SwiftUI Settings scene, we need to use the settings command
+        // First, try to send the showSettingsWindow action
+        NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+
+        // If that doesn't work, try to activate any existing settings window
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            if let window = NSApp.windows.first(where: { window in
+                window.title.contains("Settings") ||
+                window.title.contains("Preferences") ||
+                (window.frameAutosaveName ?? "").contains("Settings")
+            }) {
+                window.makeKeyAndOrderFront(nil)
+                NSApp.activate(ignoringOtherApps: true)
+            }
         }
     }
 
