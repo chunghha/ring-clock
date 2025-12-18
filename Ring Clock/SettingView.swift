@@ -51,12 +51,12 @@ struct SettingsView: View {
                                     TimeRing(progress: 0.8, color: Color(red: 0.4, green: 0.8, blue: 0.4), thickness: 20)
                                         .frame(width: 30, height: 30)
                                 }
-                                .frame(width: 70, height: 70)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 8)
-                                        .stroke(clock.colorScheme == "base" ? Color.blue : Color.clear, lineWidth: 2)
-                                )
-                                .padding(4)
+                            .frame(width: 70, height: 70)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(clock.colorScheme == "base" ? Color.accentColor : Color.clear, lineWidth: 3)
+                            )
+                            .padding(6)
                             }
                         }
                         .buttonStyle(.plain)
@@ -73,12 +73,12 @@ struct SettingsView: View {
                                     TimeRing(progress: 0.8, color: Color(red: 0.1, green: 0.2, blue: 0.5, opacity: 0.5), thickness: 20)
                                         .frame(width: 30, height: 30)
                                 }
-                                .frame(width: 70, height: 70)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 8)
-                                        .stroke(clock.colorScheme == "moon" ? Color.blue : Color.clear, lineWidth: 2)
-                                )
-                                .padding(4)
+                            .frame(width: 70, height: 70)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(clock.colorScheme == "moon" ? Color.accentColor : Color.clear, lineWidth: 3)
+                            )
+                            .padding(6)
                             }
                         }
                         .buttonStyle(.plain)
@@ -95,12 +95,12 @@ struct SettingsView: View {
                                     TimeRing(progress: 0.8, color: Color(red: 0.4, green: 0.0, blue: 0.6, opacity: 0.7), thickness: 20)
                                         .frame(width: 30, height: 30)
                                 }
-                                .frame(width: 70, height: 70)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 8)
-                                        .stroke(clock.colorScheme == "ghost" ? Color.blue : Color.clear, lineWidth: 2)
-                                )
-                                .padding(4)
+                            .frame(width: 70, height: 70)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(clock.colorScheme == "ghost" ? Color.accentColor : Color.clear, lineWidth: 3)
+                            )
+                            .padding(6)
                             }
                         }
                         .buttonStyle(.plain)
