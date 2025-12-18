@@ -287,6 +287,6 @@ struct SettingsView: View {
         }
         }
         .padding(20)
-        .frame(minWidth: 1000, maxWidth: .infinity, minHeight: 600)
+        .frame(minWidth: 800, maxWidth: .infinity, minHeight: 600)
     }
 }

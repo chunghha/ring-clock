@@ -71,7 +71,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Create a new settings window
         let settingsView = SettingsView()
             .environmentObject(clockManager ?? ClockManager())
-            .frame(width: 1100, height: 650) // Explicitly set frame size
+            .frame(width: 900, height: 650) // Adjusted frame size for better fit
 
         let hostingController = NSHostingController(rootView: settingsView)
         let window = NSWindow(contentViewController: hostingController)
@@ -82,9 +82,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         window.isReleasedWhenClosed = false
         window.center()
 
-        // Set minimum and content size
-        window.minSize = NSSize(width: 1000, height: 600)
-        window.setContentSize(NSSize(width: 1100, height: 650))
+        // Set minimum and content size (adjusted for better screen fit)
+        window.minSize = NSSize(width: 800, height: 600)
+        window.setContentSize(NSSize(width: 900, height: 650))
 
         settingsWindow = window
         window.makeKeyAndOrderFront(nil)
