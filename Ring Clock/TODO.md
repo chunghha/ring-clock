@@ -37,9 +37,10 @@
   - Add time zone selector in settings
   - Display multiple time zone clocks simultaneously
 
-- [ ] **Notifications/Alarms**
+- [x] **Notifications/Alarms**
   - Implement alarm functionality with system notifications
   - Add alarm settings UI
+  - **Completed**: Clock spins 360° in random direction every minute
 
 - [ ] **Code Quality**
   - Add unit tests for ClockManager time calculations

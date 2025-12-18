@@ -38,12 +38,14 @@ struct ContentView: View {
                         .accessibilityValue(clock.digitalTimeString)
                 }
             }
-            .padding(40)
-            .opacity(clock.windowOpacity)
-            .animation(.easeInOut(duration: 0.5), value: clock.colorScheme)
-            .onHover { hovering in
-                isHovering = hovering
-            }
+        .padding(40)
+        .opacity(clock.windowOpacity)
+        .animation(.easeInOut(duration: 0.5), value: clock.colorScheme)
+        .rotationEffect(.degrees(clock.rotationAngle))
+        .animation(clock.shouldAnimate ? .easeInOut(duration: 1.0) : .none, value: clock.rotationAngle)
+        .onHover { hovering in
+            isHovering = hovering
+        }
         } else {
             // Multiple time zone view
             HStack(spacing: 20) {
@@ -57,6 +59,8 @@ struct ContentView: View {
             .padding(20)
             .opacity(clock.windowOpacity)
             .animation(.easeInOut(duration: 0.5), value: clock.colorScheme)
+            .rotationEffect(.degrees(clock.rotationAngle))
+            .animation(clock.shouldAnimate ? .easeInOut(duration: 1.0) : .none, value: clock.rotationAngle)
         }
     }
 }

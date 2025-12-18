@@ -17,6 +17,11 @@ class ClockManager: ObservableObject {
     @AppStorage("showDigitalTime") var showDigitalTime: Bool = false
     @AppStorage("digitalFontSize") var digitalFontSize: Double = 24
 
+    // Animation state
+    @Published var rotationAngle: Double = 0
+    @Published var shouldAnimate: Bool = false
+    private var lastMinute: Int = -1
+
     // Time zone preferences
     @AppStorage("selectedTimeZones") var selectedTimeZonesData: String = "[]"
     @AppStorage("primaryTimeZone") var primaryTimeZone: String = TimeZone.current.identifier
@@ -334,6 +339,27 @@ class ClockManager: ObservableObject {
         self.second = secs / 60.0
         self.minute = mins / 60.0
         self.hour = (hrs.truncatingRemainder(dividingBy: 12)) / 12.0
+
+        // Check for minute change to trigger animation
+        let currentMinute = components.minute ?? 0
+        if currentMinute != lastMinute && lastMinute != -1 {
+            triggerMinuteAnimation()
+        }
+        lastMinute = currentMinute
+    }
+
+    private func triggerMinuteAnimation() {
+        // Random direction: true for clockwise, false for counter-clockwise
+        let clockwise = Bool.random()
+        let targetAngle = clockwise ? rotationAngle + 360 : rotationAngle - 360
+
+        rotationAngle = targetAngle
+        shouldAnimate = true
+
+        // Reset animation flag after a short delay
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.shouldAnimate = false
+        }
     }
 
     func updateTimeForZone(_ timeZone: TimeZone) {
