@@ -82,8 +82,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         window.center()
 
         // Set minimum size
-        window.minSize = NSSize(width: 500, height: 600)
-        window.setContentSize(NSSize(width: 550, height: 650))
+        window.minSize = NSSize(width: 1000, height: 600)
+        window.setContentSize(NSSize(width: 1100, height: 650))
 
         settingsWindow = window
         window.makeKeyAndOrderFront(nil)
