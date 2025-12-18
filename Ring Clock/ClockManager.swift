@@ -30,6 +30,11 @@ class ClockManager: ObservableObject {
     private let moonMinColor: Color = Color(NSColor(red: 0.9, green: 0.7, blue: 0.1, alpha: 0.6))
     private let moonSecColor: Color = Color(NSColor(red: 0.1, green: 0.2, blue: 0.5, alpha: 0.5))
 
+    // Ghost in the Shell color scheme - cyberpunk aesthetic
+    private let ghostHourColor: Color = Color(NSColor(red: 0.0, green: 0.8, blue: 0.8, alpha: 0.8)) // Bright cyan
+    private let ghostMinColor: Color = Color(NSColor(red: 0.4, green: 0.0, blue: 0.6, alpha: 0.7)) // Deep purple
+    private let ghostSecColor: Color = Color(NSColor(red: 0.0, green: 1.0, blue: 0.4, alpha: 0.6)) // Neon green
+
     // Custom color properties
     var customHourColor: Color {
         get {
@@ -89,6 +94,7 @@ class ClockManager: ObservableObject {
     var hourColor: Color {
         switch colorScheme {
         case "moon": return moonHourColor
+        case "ghost": return ghostHourColor
         case "custom": return customHourColor
         default: return basicHourColor
         }
@@ -96,6 +102,7 @@ class ClockManager: ObservableObject {
     var minColor: Color {
         switch colorScheme {
         case "moon": return moonMinColor
+        case "ghost": return ghostMinColor
         case "custom": return customMinColor
         default: return basicMinColor
         }
@@ -103,6 +110,7 @@ class ClockManager: ObservableObject {
     var secColor: Color {
         switch colorScheme {
         case "moon": return moonSecColor
+        case "ghost": return ghostSecColor
         case "custom": return customSecColor
         default: return basicSecColor
         }

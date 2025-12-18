@@ -10,6 +10,7 @@ struct SettingsView: View {
                 Picker("Theme", selection: $clock.colorScheme) {
                     Text("Base").tag("base")
                     Text("Moon").tag("moon")
+                    Text("Ghost in the Shell").tag("ghost")
                     Text("Custom").tag("custom")
                 }
                 .pickerStyle(.segmented)
