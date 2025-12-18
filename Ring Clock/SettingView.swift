@@ -21,6 +21,7 @@ struct SettingsView: View {
     ]
 
     var body: some View {
+        ScrollView {
         Form {
             Section(header: Text("Color Scheme")) {
                 Picker("Theme", selection: $clock.colorScheme) {
@@ -284,7 +285,8 @@ struct SettingsView: View {
                     .foregroundColor(.gray)
             }
         }
+        }
         .padding(20)
-        .frame(width: 350)
+        .frame(minWidth: 1000, maxWidth: .infinity, minHeight: 600)
     }
 }
