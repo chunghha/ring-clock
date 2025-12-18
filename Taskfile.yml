@@ -1,0 +1,34 @@
+version: '3'
+
+tasks:
+  build:
+    desc: Build the Ring Clock app in Debug configuration
+    cmds:
+      - xcodebuild -project "Ring Clock.xcodeproj" -scheme "Ring Clock" -configuration Debug SYMROOT=build build
+
+  run:
+    desc: Build and run the Ring Clock app
+    deps: [build]
+    cmds:
+      - open build/Debug/Ring\ Clock.app
+
+  stop:
+    desc: Stop the running Ring Clock app
+    cmds:
+      - killall "Ring Clock" || true
+
+  clean:
+    desc: Clean the build directory
+    cmds:
+      - xcodebuild -project "Ring Clock.xcodeproj" -scheme "Ring Clock" clean
+
+  build-release:
+    desc: Build the Ring Clock app in Release configuration
+    cmds:
+      - xcodebuild -project "Ring Clock.xcodeproj" -scheme "Ring Clock" -configuration Release SYMROOT=build build
+
+  run-release:
+    desc: Build and run the Ring Clock app in Release
+    deps: [build-release]
+    cmds:
+      - open build/Release/Ring\ Clock.app

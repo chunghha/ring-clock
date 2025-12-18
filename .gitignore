@@ -1,0 +1,69 @@
+# macOS
+.DS_Store
+
+# Xcode
+build/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+*.moved-aside
+*.xccheckout
+*.xcscmblueprint
+
+# Swift Package Manager
+.build/
+.swiftpm/
+
+# Derived Data
+DerivedData/
+
+# SwiftLint cache
+.swiftlint.yml
+.swiftlint.cache
+
+# SwiftFormat cache
+.swiftformat
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# CocoaPods
+Pods/
+
+# Carthage
+Carthage/
+
+# SPM Dependencies
+Packages/
+
+# Binary artifacts
+*.app
+*.dylib
+*.framework
+*.xcframework
+*.bundle
+
+# Test coverage
+*.profdata
+*.profraw
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*~
+
+# IDEs
+.vscode/
+.idea/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
