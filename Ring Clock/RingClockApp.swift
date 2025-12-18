@@ -150,9 +150,9 @@ struct TransparentWindowView: NSViewRepresentable {
                 window.titlebarAppearsTransparent = true
                 window.titleVisibility = .hidden
                 window.hasShadow = false
-                // This makes it float above desktop but below windows
+                // This makes it float above desktop but below windows and stick to wallpaper
                  window.level = NSWindow.Level(rawValue: -1000)
-                window.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
+                window.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary, .stationary, .ignoresCycle]
 
                 if let screen = NSScreen.main {
                     let screenFrame = screen.visibleFrame
