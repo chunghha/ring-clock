@@ -2,8 +2,6 @@
 //  Ring_ClockUITestsLaunchTests.swift
 //  Ring ClockUITests
 //
-//  Created by Chris Ha on 12/18/25.
-//
 
 import XCTest
 

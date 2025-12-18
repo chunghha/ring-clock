@@ -17,6 +17,9 @@ class ClockManager: ObservableObject {
     @AppStorage("showDigitalTime") var showDigitalTime: Bool = false
     @AppStorage("digitalFontSize") var digitalFontSize: Double = 24
 
+    // Menu bar preferences
+    @AppStorage("showMenuBarIcon") var showMenuBarIcon: Bool = true
+
     // Animation state
     @Published var rotationAngle: Double = 0
     @Published var shouldAnimate: Bool = false

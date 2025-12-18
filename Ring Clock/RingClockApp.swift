@@ -3,12 +3,14 @@ import SwiftUI
 class AppDelegate: NSObject, NSApplicationDelegate {
     var statusItem: NSStatusItem?
     var clockWindow: NSWindow?
+    var clockManager: ClockManager?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         setupStatusBar()
     }
 
     func setupStatusBar() {
+        // Always show status bar for now (can be made configurable later)
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
 
         if let button = statusItem?.button {
@@ -67,6 +69,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func setClockWindow(_ window: NSWindow) {
         clockWindow = window
+        // Setup status bar when window is ready
+        setupStatusBar()
     }
 }
 

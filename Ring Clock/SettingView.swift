@@ -60,6 +60,13 @@ struct SettingsView: View {
                 }
             }
 
+            Section(header: Text("Menu Bar")) {
+                Toggle("Show menu bar icon", isOn: $clock.showMenuBarIcon)
+                Text("When enabled, shows a clock icon in the menu bar for quick access")
+                    .font(.caption)
+                    .foregroundColor(.gray)
+            }
+
             Section(header: Text("Time Zones")) {
                 Text("Multiple Time Zones: \(clock.selectedTimeZones.count)")
                     .font(.subheadline)

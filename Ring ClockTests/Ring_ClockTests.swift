@@ -2,8 +2,6 @@
 //  Ring_ClockTests.swift
 //  Ring ClockTests
 //
-//  Created by Chris Ha on 12/18/25.
-//
 
 // Unit tests for Ring Clock - currently disabled due to testing framework setup
 // TODO: Re-enable once Testing framework is properly configured
