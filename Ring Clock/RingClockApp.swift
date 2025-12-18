@@ -1,13 +1,28 @@
 import SwiftUI
+import UserNotifications
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     var statusItem: NSStatusItem?
-    var clockWindow: NSWindow?
     var settingsWindow: NSWindow?
     var clockManager: ClockManager?
+    private var screenshotObserver: NSObjectProtocol?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        requestNotificationPermissions()
         setupStatusBar()
+        setupScreenshotObserver()
+    }
+
+    private func requestNotificationPermissions() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { granted, error in
+            if let error = error {
+                print("❌ Notification permission error: \(error)")
+            } else if granted {
+                print("✅ Notification permissions granted")
+            } else {
+                print("⚠️ Notification permissions denied")
+            }
+        }
     }
 
     func setupStatusBar() {
@@ -23,10 +38,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         let menu = NSMenu()
 
-        let showHideItem = NSMenuItem(title: "Show/Hide Clock", action: #selector(toggleClockWindow), keyEquivalent: "")
-        showHideItem.target = self
-        menu.addItem(showHideItem)
-
         menu.addItem(NSMenuItem.separator())
 
         let settingsItem = NSMenuItem(title: "Settings...", action: #selector(openSettings), keyEquivalent: ",")
@@ -35,6 +46,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(settingsItem)
 
         menu.addItem(NSMenuItem.separator())
+
+
 
         let quitItem = NSMenuItem(title: "Quit Ring Clock", action: #selector(quitApp), keyEquivalent: "q")
         quitItem.keyEquivalentModifierMask = .command
@@ -49,16 +62,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem?.button?.performClick(nil)
     }
 
-    @objc func toggleClockWindow() {
-        if let window = clockWindow {
-            if window.isVisible {
-                window.orderOut(nil)
-            } else {
-                window.orderFront(nil)
-                NSApp.activate(ignoringOtherApps: true)
-            }
-        }
-    }
+
 
     @objc func openSettings() {
         // If settings window already exists and is visible, just activate it
@@ -91,14 +95,31 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.activate(ignoringOtherApps: true)
     }
 
+
+
+
+
     @objc func quitApp() {
         NSApp.terminate(nil)
     }
 
-    func setClockWindow(_ window: NSWindow) {
-        clockWindow = window
-        // Setup status bar when window is ready
-        setupStatusBar()
+
+
+    private func setupScreenshotObserver() {
+        screenshotObserver = NotificationCenter.default.addObserver(
+            forName: NSNotification.Name("RequestScreenshot"),
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            self?.handleScreenshot()
+        }
+    }
+
+    @objc private func handleScreenshot() {
+        let success = ScreenshotManager.captureWindow()
+        if success {
+            NSSound(named: "Glass")?.play()
+        }
     }
 
     func setClockManager(_ manager: ClockManager) {
@@ -112,15 +133,6 @@ struct RingClockApp: App {
     @StateObject private var clockManager = ClockManager()
 
     var body: some Scene {
-        // Main Clock Window
-        WindowGroup {
-            ContentView()
-                .environmentObject(clockManager)
-                .background(TransparentWindowView(appDelegate: appDelegate))
-        }
-        .windowStyle(.hiddenTitleBar)
-        .windowResizability(.contentSize)
-
         // Settings Window (accessible via Cmd + ,)
         Settings {
             SettingsView()
@@ -133,45 +145,18 @@ struct RingClockApp: App {
                 }
                 .keyboardShortcut("t", modifiers: .command)
             }
-        }
-    }
-}
-
-// Helper to make the window transparent
-struct TransparentWindowView: NSViewRepresentable {
-    let appDelegate: AppDelegate
-
-    func makeNSView(context: Context) -> NSView {
-        let view = NSView()
-        DispatchQueue.main.async {
-            if let window = view.window {
-                window.isOpaque = false
-                window.backgroundColor = .clear
-                window.titlebarAppearsTransparent = true
-                window.titleVisibility = .hidden
-                window.hasShadow = false
-                // This makes it float above desktop but below windows and stick to wallpaper
-                 window.level = NSWindow.Level(rawValue: -1000)
-                window.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary, .stationary, .ignoresCycle]
-
-                if let screen = NSScreen.main {
-                    let screenFrame = screen.visibleFrame
-                    let windowFrame = window.frame
-                    let newOrigin = NSPoint(x: screenFrame.maxX - windowFrame.width - 20, y: screenFrame.maxY - windowFrame.height)
-                    window.setFrameOrigin(newOrigin)
+            CommandMenu("Tools") {
+                Button("Take Screenshot") {
+                    _ = ScreenshotManager.captureWindow()
                 }
-
-                // Register window with status bar
-                appDelegate.setClockWindow(window)
+                .keyboardShortcut("t", modifiers: [.command, .shift])
             }
         }
-        return view
     }
-    func updateNSView(_ nsView: NSView, context: Context) {}
 }
 
 // This extension allows @AppStorage to handle SwiftUI Color
-extension Color: RawRepresentable {
+extension Color: @retroactive RawRepresentable {
     public init?(rawValue: String) {
         guard let data = Data(base64Encoded: rawValue) else {
             self = .black

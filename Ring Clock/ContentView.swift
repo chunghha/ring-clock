@@ -4,6 +4,11 @@ struct ContentView: View {
     @EnvironmentObject var clock: ClockManager
     @State private var isHovering = false
 
+    // Screenshot notification
+    private let screenshotNotification = Notification.Name("RequestScreenshot")
+
+
+
     var body: some View {
         if clock.selectedTimeZones.count <= 1 {
             // Single clock view
@@ -46,6 +51,18 @@ struct ContentView: View {
         .onHover { hovering in
             isHovering = hovering
         }
+        .simultaneousGesture(
+            TapGesture()
+                .onEnded { _ in
+                    print("🖱️ Simultaneous tap detected, checking for Cmd...")
+                    if NSApp.currentEvent?.modifierFlags.contains(.command) == true {
+                        print("🎯 Cmd+click detected - posting screenshot notification")
+                        NotificationCenter.default.post(name: screenshotNotification, object: nil)
+                    } else {
+                        print("❌ Tap detected but no Cmd key")
+                    }
+                }
+        )
         } else {
             // Multiple time zone view
             HStack(spacing: 20) {

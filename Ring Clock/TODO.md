@@ -16,6 +16,12 @@
 
 ## Medium Priority (Feature Enhancements)
 
+- [x] **Screenshot Functionality**
+  - Implement Cmd+Click screenshot capture
+  - Add Cmd+Shift+T menu bar screenshot option
+  - Auto-save screenshots to Desktop with timestamps
+  - **Completed**: Full screenshot implementation with tests
+
 - [x] **Custom Color Themes**
   - Add color picker controls in SettingsView for custom hour/minute/second colors
   - Store custom colors in AppStorage

@@ -4,25 +4,32 @@ A beautiful, customizable desktop clock application for macOS featuring animated
 
 ## Features
 
-### 🕒 Time Display
-- **Analog Rings**: Hour, minute, and second rings with smooth animations
-- **Digital Overlay**: Optional digital time display with customizable font size
-- **Minute Celebrations**: Clock spins 360° in a random direction every minute
+### Time Display
+- Analog rings for hours, minutes, and seconds with smooth animations
+- Optional digital time display with customizable font size
+- Clock spins 360 degrees in a random direction every minute
 
-### 🎨 Customization
-- **Color Themes**: Choose from Base, Moon, or Ghost in the Shell themes
-- **Custom Colors**: Create your own color schemes with RGB picker controls
-- **Theme Management**: Save, load, and delete custom themes
-- **Transparency**: Adjustable window opacity
+### Customization
+- Color themes: Base, Moon, and Ghost in the Shell themes
+- Custom colors: Create your own color schemes with RGB picker controls
+- Theme management: Save, load, and delete custom themes
+- Adjustable window opacity
 
-### 🌍 Multi-Time Zone Support
-- **Multiple Clocks**: Display clocks for different time zones simultaneously
-- **Easy Management**: Add/remove time zones through settings
-- **Popular Zones**: Quick access to major cities (New York, London, Tokyo, etc.)
+### Multi-Time Zone Support
+- Display clocks for different time zones simultaneously
+- Add/remove time zones through settings
+- Quick access to major cities (New York, London, Tokyo, etc.)
 
-### ♿ Accessibility
-- **Screen Reader Support**: All time rings include accessibility labels
-- **Keyboard Navigation**: Full keyboard accessibility
+### Accessibility
+- Screen reader support for all time rings
+- Full keyboard accessibility
+
+## Keyboard Shortcuts
+
+- `Cmd+,`: Open Settings
+- `Cmd+T`: Toggle between Base and Moon themes
+- `Cmd+Click`: Capture screenshot
+- `Cmd+Shift+T`: Take screenshot (menu option)
 
 ## Installation
 
@@ -33,9 +40,9 @@ A beautiful, customizable desktop clock application for macOS featuring animated
 ## Usage
 
 ### Basic Operation
-- **Theme Selection**: Use Cmd+T or Settings → Color Scheme
-- **Settings**: Access via Cmd+, or click the app in menu bar
-- **Seconds Toggle**: Hover over clock or use Settings toggle
+- Theme selection: Use Cmd+T or Settings → Color Scheme
+- Settings: Access via Cmd+, or click the app in menu bar
+- Seconds toggle: Hover over clock or use Settings toggle
 
 ### Customization
 - **Custom Colors**: Select "Custom" theme, then use color pickers
