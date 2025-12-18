@@ -3,6 +3,7 @@ import SwiftUI
 class AppDelegate: NSObject, NSApplicationDelegate {
     var statusItem: NSStatusItem?
     var clockWindow: NSWindow?
+    var settingsWindow: NSWindow?
     var clockManager: ClockManager?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
@@ -60,21 +61,33 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @objc func openSettings() {
-        // For SwiftUI Settings scene, we need to use the settings command
-        // First, try to send the showSettingsWindow action
-        NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
-
-        // If that doesn't work, try to activate any existing settings window
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            if let window = NSApp.windows.first(where: { window in
-                window.title.contains("Settings") ||
-                window.title.contains("Preferences") ||
-                (window.frameAutosaveName ?? "").contains("Settings")
-            }) {
-                window.makeKeyAndOrderFront(nil)
-                NSApp.activate(ignoringOtherApps: true)
-            }
+        // If settings window already exists and is visible, just activate it
+        if let existingWindow = settingsWindow, existingWindow.isVisible {
+            existingWindow.makeKeyAndOrderFront(nil)
+            NSApp.activate(ignoringOtherApps: true)
+            return
         }
+
+        // Create a new settings window
+        let settingsView = SettingsView()
+            .environmentObject(clockManager ?? ClockManager())
+
+        let hostingController = NSHostingController(rootView: settingsView)
+        let window = NSWindow(contentViewController: hostingController)
+
+        window.title = "Ring Clock Settings"
+        window.styleMask = [.titled, .closable, .miniaturizable, .resizable]
+        window.titlebarAppearsTransparent = false
+        window.isReleasedWhenClosed = false
+        window.center()
+
+        // Set minimum size
+        window.minSize = NSSize(width: 500, height: 600)
+        window.setContentSize(NSSize(width: 550, height: 650))
+
+        settingsWindow = window
+        window.makeKeyAndOrderFront(nil)
+        NSApp.activate(ignoringOtherApps: true)
     }
 
     @objc func quitApp() {
@@ -85,6 +98,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         clockWindow = window
         // Setup status bar when window is ready
         setupStatusBar()
+    }
+
+    func setClockManager(_ manager: ClockManager) {
+        clockManager = manager
     }
 }
 
