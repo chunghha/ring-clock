@@ -73,9 +73,9 @@ struct SettingsView: View {
                             ZStack {
                                 TimeRing(progress: 0.5, color: Color(red: 0.0, green: 0.8, blue: 0.8, opacity: 0.8), thickness: 20)
                                     .frame(width: 60, height: 60)
-                                TimeRing(progress: 0.3, color: Color(red: 0.4, green: 0.0, blue: 0.6, opacity: 0.7), thickness: 20)
+                                TimeRing(progress: 0.3, color: Color(red: 0.0, green: 1.0, blue: 0.4, opacity: 0.6), thickness: 20)
                                     .frame(width: 45, height: 45)
-                                TimeRing(progress: 0.8, color: Color(red: 0.0, green: 1.0, blue: 0.4, opacity: 0.6), thickness: 20)
+                                TimeRing(progress: 0.8, color: Color(red: 0.4, green: 0.0, blue: 0.6, opacity: 0.7), thickness: 20)
                                     .frame(width: 30, height: 30)
                             }
                             .frame(width: 70, height: 70)

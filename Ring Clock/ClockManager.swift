@@ -87,8 +87,8 @@ class ClockManager: ObservableObject {
 
     // Ghost in the Shell color scheme - cyberpunk aesthetic
     private let ghostHourColor: Color = Color(NSColor(red: 0.0, green: 0.8, blue: 0.8, alpha: 0.8)) // Bright cyan
-    private let ghostMinColor: Color = Color(NSColor(red: 0.4, green: 0.0, blue: 0.6, alpha: 0.7)) // Deep purple
-    private let ghostSecColor: Color = Color(NSColor(red: 0.0, green: 1.0, blue: 0.4, alpha: 0.6)) // Neon green
+    private let ghostMinColor: Color = Color(NSColor(red: 0.0, green: 1.0, blue: 0.4, alpha: 0.6)) // Neon green
+    private let ghostSecColor: Color = Color(NSColor(red: 0.4, green: 0.0, blue: 0.6, alpha: 0.7)) // Deep purple
 
     /// Custom color properties with improved error handling
     var customHourColor: Color {
