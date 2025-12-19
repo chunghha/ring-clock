@@ -38,6 +38,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         let menu = NSMenu()
 
+        let showHideItem = NSMenuItem(title: "Show/Hide Clock", action: #selector(toggleClockWindow), keyEquivalent: "")
+        showHideItem.target = self
+        menu.addItem(showHideItem)
+
         menu.addItem(NSMenuItem.separator())
 
         let settingsItem = NSMenuItem(title: "Settings...", action: #selector(openSettings), keyEquivalent: ",")
@@ -46,8 +50,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(settingsItem)
 
         menu.addItem(NSMenuItem.separator())
-
-
 
         let quitItem = NSMenuItem(title: "Quit Ring Clock", action: #selector(quitApp), keyEquivalent: "q")
         quitItem.keyEquivalentModifierMask = .command
@@ -62,7 +64,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem?.button?.performClick(nil)
     }
 
-
+    @objc func toggleClockWindow() {
+        if let mainWindow = NSApp.windows.first(where: { $0.title.isEmpty && !($0.styleMask.contains(.titled)) }) {
+            if mainWindow.isVisible {
+                mainWindow.orderOut(nil)
+            } else {
+                mainWindow.makeKeyAndOrderFront(nil)
+                NSApp.activate(ignoringOtherApps: true)
+            }
+        }
+    }
 
     @objc func openSettings() {
         // If settings window already exists and is visible, just activate it
@@ -133,11 +144,14 @@ struct RingClockApp: App {
     @StateObject private var clockManager = ClockManager()
 
     var body: some Scene {
-        // Settings Window (accessible via Cmd + ,)
-        Settings {
-            SettingsView()
+        // Main Clock Window
+        WindowGroup {
+            ContentView()
                 .environmentObject(clockManager)
+                .background(WindowConfigView())
         }
+        .windowStyle(.hiddenTitleBar)
+        .windowResizability(.contentSize)
         .commands {
             CommandMenu("Theme") {
                 Button("Switch Color Scheme") {
@@ -152,7 +166,47 @@ struct RingClockApp: App {
                 .keyboardShortcut("t", modifiers: [.command, .shift])
             }
         }
+
+        // Settings Window (accessible via Cmd + ,)
+        Settings {
+            SettingsView()
+                .environmentObject(clockManager)
+        }
     }
+}
+
+// Configure main window appearance
+struct WindowConfigView: NSViewRepresentable {
+    func makeNSView(context: Context) -> NSView {
+        let view = NSView()
+        DispatchQueue.main.async {
+            guard let window = view.window else { return }
+            window.isOpaque = false
+            window.backgroundColor = .clear
+            window.styleMask = []  // Remove all frame decorations
+            window.titlebarAppearsTransparent = true
+            window.titleVisibility = .hidden
+            window.hasShadow = false
+            // This makes it float above desktop but below windows and stick to wallpaper
+            window.level = NSWindow.Level(rawValue: -1000)
+            window.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary, .stationary]
+            window.isReleasedWhenClosed = false
+
+            // Position the window at top-right with minimal padding
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                if let screen = NSScreen.main {
+                    let screenFrame = screen.visibleFrame
+                    let windowSize = NSSize(width: 500, height: 500)
+                    let padding: CGFloat = 20
+                    let newOrigin = NSPoint(x: screenFrame.maxX - windowSize.width - padding, y: screenFrame.maxY - windowSize.height - padding)
+                    window.setFrame(NSRect(origin: newOrigin, size: windowSize), display: true)
+                }
+            }
+        }
+        return view
+    }
+
+    func updateNSView(_ nsView: NSView, context: Context) {}
 }
 
 // This extension allows @AppStorage to handle SwiftUI Color

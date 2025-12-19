@@ -14,8 +14,8 @@ class ClockManager: ObservableObject {
 
     // Clock style preferences
     @AppStorage("use24HourFormat") var use24HourFormat: Bool = false
-    @AppStorage("showDigitalTime") var showDigitalTime: Bool = false
-    @AppStorage("digitalFontSize") var digitalFontSize: Double = 24
+    @AppStorage("showDigitalTime") var showDigitalTime: Bool = true
+    @AppStorage("digitalFontSize") var digitalFontSize: Double = 56
 
     // Menu bar preferences
     @AppStorage("showMenuBarIcon") var showMenuBarIcon: Bool = true
@@ -357,22 +357,20 @@ class ClockManager: ObservableObject {
         return components.second ?? 0
     }
 
-    // Formatted time string for digital display
+    // Formatted time string for digital display (hh:mm format)
     var digitalTimeString: String {
         let calendar = Calendar.current
         let now = Date()
-        let components = calendar.dateComponents([.hour, .minute, .second], from: now)
+        let components = calendar.dateComponents([.hour, .minute], from: now)
 
         let hour = components.hour ?? 0
         let minute = components.minute ?? 0
-        let second = components.second ?? 0
 
         if use24HourFormat {
-            return String(format: "%02d:%02d:%02d", hour, minute, second)
+            return String(format: "%02d:%02d", hour, minute)
         } else {
             let displayHour = hour == 0 ? 12 : (hour > 12 ? hour - 12 : hour)
-            let amPM = hour >= 12 ? "PM" : "AM"
-            return String(format: "%d:%02d:%02d %@", displayHour, minute, second, amPM)
+            return String(format: "%d:%02d", displayHour, minute)
         }
     }
 
