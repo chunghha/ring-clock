@@ -81,34 +81,6 @@ class ClockManager: ObservableObject {
     return now.addingTimeInterval(offset)
   }
 
-  // Basic color scheme
-  private let basicHourColor: Color = Color(NSColor(red: 0.4, green: 0.6, blue: 0.9, alpha: 1.0))
-  private let basicMinColor: Color = Color(NSColor(red: 0.5, green: 0.8, blue: 0.6, alpha: 1.0))
-  private let basicSecColor: Color = Color(NSColor(red: 1.0, green: 0.8, blue: 0.6, alpha: 0.7))
-
-  // Moon color scheme - soft, ethereal colors
-  private let moonHourColor: Color = Color(NSColor(red: 0.7, green: 0.4, blue: 0.1, alpha: 0.7))
-  private let moonMinColor: Color = Color(NSColor(red: 0.9, green: 0.7, blue: 0.1, alpha: 0.6))
-  private let moonSecColor: Color = Color(NSColor(red: 0.1, green: 0.2, blue: 0.5, alpha: 0.5))
-
-  // Ghost in the Shell color scheme - cyberpunk aesthetic
-  private let ghostHourColor: Color = Color(NSColor(red: 0.0, green: 0.8, blue: 0.8, alpha: 0.8))  // Bright cyan
-  private let ghostMinColor: Color = Color(NSColor(red: 0.0, green: 1.0, blue: 0.4, alpha: 0.6))  // Neon green
-  private let ghostSecColor: Color = Color(NSColor(red: 0.4, green: 0.0, blue: 0.6, alpha: 0.7))  // Deep purple
-
-  // Gray color scheme - neutral, elegant aesthetic
-  private let grayHourColor: Color = Color(NSColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 0.8))  // Medium gray
-  private let grayMinColor: Color = Color(NSColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 0.7))  // Dark gray
-  private let graySecColor: Color = Color(NSColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 0.6))  // Light gray
-
-  // Vintage color scheme - aged paper aesthetic with warm yellow tone
-  private let vintageHourColor: Color = Color(
-    NSColor(red: 0.75, green: 0.73, blue: 0.64, alpha: 0.6))  // Aged paper (darkest)
-  private let vintageMinColor: Color = Color(
-    NSColor(red: 0.70, green: 0.68, blue: 0.58, alpha: 0.7))  // Aged paper medium
-  private let vintageSecColor: Color = Color(
-    NSColor(red: 0.78, green: 0.78, blue: 0.70, alpha: 0.82))  // Aged paper light (brightest)
-
   /// Custom color properties with improved error handling
   var customHourColor: Color {
     get {
@@ -465,7 +437,7 @@ class ClockManager: ObservableObject {
     // Animate to new angles
     rotationX = randomX
     rotationY = randomY
-    rotationZ = rotationZ + randomZ
+    rotationZ += randomZ
     shouldAnimate = true
 
     // Reset animation flag and return rotations to zero after animation completes
