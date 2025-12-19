@@ -415,9 +415,13 @@ class ClockManager: ObservableObject {
         rotationZ = rotationZ + randomZ
         shouldAnimate = true
 
-        // Reset animation flag after a short delay
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+        // Reset animation flag and return rotations to zero after animation completes
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.shouldAnimate = false
+            // Smoothly return to initial position
+            self.rotationX = 0
+            self.rotationY = 0
+            self.rotationZ = 0
         }
     }
 
