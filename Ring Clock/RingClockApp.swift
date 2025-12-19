@@ -30,8 +30,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
 
         if let button = statusItem?.button {
-            // Use a simple clock emoji as icon, or we could load an image
-            button.title = "🕐"
+            // Use the app's icon from the asset catalog
+            if let appIcon = NSImage(named: "AppIcon") {
+                button.image = appIcon
+            } else {
+                // Fallback to emoji if icon not found
+                button.title = "🕐"
+            }
             button.action = #selector(statusBarButtonClicked)
             button.target = self
         }
