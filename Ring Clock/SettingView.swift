@@ -76,6 +76,14 @@ struct SettingsView: View {
             Slider(value: $clock.digitalFontSize, in: 16...48, step: 2) {
               Text("Font Size: \(Int(clock.digitalFontSize))")
             }
+
+            Picker("Text Color", selection: $clock.digitalTimeTextColor) {
+              Text("White").tag("white")
+              Text("Black").tag("black")
+              Text("Brightest in Theme").tag("brightest")
+              Text("Darkest in Theme").tag("darkest")
+            }
+            .pickerStyle(.menu)
           }
         }
 
@@ -135,21 +143,21 @@ struct SettingsView: View {
 
           if clock.selectedTimeZones.count > 1 {
             ForEach(clock.selectedTimeZones, id: \.self) { zoneId in
-                HStack {
-                  Text("\(zoneId) (\(commonTimeZones[zoneId] ?? "Unknown"))")
-                  Spacer()
-                  if clock.selectedTimeZones.count > 1 {
-                    Button(
-                      action: { clock.removeTimeZone(zoneId) },
-                      label: {
-                        Image(systemName: "minus.circle.fill")
-                          .foregroundColor(.red)
-                      }
-                    )
-                    .buttonStyle(.borderless)
-                  }
+              HStack {
+                Text("\(zoneId) (\(commonTimeZones[zoneId] ?? "Unknown"))")
+                Spacer()
+                if clock.selectedTimeZones.count > 1 {
+                  Button(
+                    action: { clock.removeTimeZone(zoneId) },
+                    label: {
+                      Image(systemName: "minus.circle.fill")
+                        .foregroundColor(.red)
+                    }
+                  )
+                  .buttonStyle(.borderless)
                 }
               }
+            }
           }
 
           HStack {
@@ -192,10 +200,10 @@ struct SettingsView: View {
                   .buttonStyle(.borderless)
                 }
               }
-                }
-                .padding(.top, 8)
-                }
-                }
+            }
+            .padding(.top, 8)
+          }
+        }
 
         Section(header: Text("Custom Themes")) {
           HStack {

@@ -49,7 +49,7 @@ struct TimeZoneClock: View {
     VStack(spacing: 8) {
       Text(label)
         .font(.caption)
-        .foregroundColor(.white.opacity(0.8))
+        .foregroundColor(clockManager.digitalTextColor.opacity(0.8))
 
       ZStack {
         // Second Ring (Outer) - smaller for multi-clock view

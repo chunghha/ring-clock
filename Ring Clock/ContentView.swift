@@ -35,7 +35,7 @@ struct ContentView: View {
         if clock.showDigitalTime {
           Text(clock.digitalTimeString)
             .font(.system(size: clock.digitalFontSize, weight: .bold, design: .monospaced))
-            .foregroundColor(.white)
+            .foregroundColor(clock.digitalTextColor)
             .shadow(color: .black.opacity(0.8), radius: 4, x: 0, y: 0)
             .accessibilityLabel("Digital time display")
             .accessibilityValue(clock.digitalTimeString)

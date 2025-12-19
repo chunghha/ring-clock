@@ -20,6 +20,9 @@ class ClockManager: ObservableObject {
   // Menu bar preferences
   @AppStorage("showMenuBarIcon") var showMenuBarIcon: Bool = true
 
+  // Text color preference
+  @AppStorage("digitalTimeTextColor") var digitalTimeTextColor: String = "white"
+
   // Animation state
   @Published var rotationAngle: Double = 0
   @Published var rotationX: Double = 0  // 3D rotation around X axis
@@ -223,6 +226,44 @@ class ClockManager: ObservableObject {
     case "custom": return customSecColor
     default: return basicSecColor
     }
+  }
+
+  var digitalTextColor: Color {
+    switch digitalTimeTextColor {
+    case "black":
+      return .black
+    case "brightest":
+      return brightestThemeColor
+    case "darkest":
+      return darkestThemeColor
+    default:
+      return .white
+    }
+  }
+
+  private var brightestThemeColor: Color {
+    let colors = [hourColor, minColor, secColor]
+    return colors.max { lhs, rhs in
+      brightness(of: lhs) < brightness(of: rhs)
+    } ?? .white
+  }
+
+  private var darkestThemeColor: Color {
+    let colors = [hourColor, minColor, secColor]
+    return colors.min { lhs, rhs in
+      brightness(of: lhs) < brightness(of: rhs)
+    } ?? .black
+  }
+
+  private func brightness(of color: Color) -> Double {
+    let nsColor = NSColor(color)
+    var red: CGFloat = 0
+    var green: CGFloat = 0
+    var blue: CGFloat = 0
+    var alpha: CGFloat = 0
+    nsColor.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+    // Standard luminance formula
+    return (0.299 * red + 0.587 * green + 0.114 * blue) * alpha
   }
 
   func toggleScheme() {

@@ -100,24 +100,26 @@ class DynamicIconGenerator {
     ringPath.stroke()
 
     // Hour hand (shorter, thicker)
-    drawHand(HandConfig(
-      center: center,
-      radius: radius,
-      angle: hourAngle,
-      length: 0.4,
-      width: size * 0.065,
-      color: .white
-    ))
+    drawHand(
+      HandConfig(
+        center: center,
+        radius: radius,
+        angle: hourAngle,
+        length: 0.4,
+        width: size * 0.065,
+        color: .white
+      ))
 
     // Minute hand (longer, thicker) - Always red
-    drawHand(HandConfig(
-      center: center,
-      radius: radius,
-      angle: minuteAngle,
-      length: 0.5,
-      width: size * 0.08,
-      color: .systemRed
-    ))
+    drawHand(
+      HandConfig(
+        center: center,
+        radius: radius,
+        angle: minuteAngle,
+        length: 0.5,
+        width: size * 0.08,
+        color: .systemRed
+      ))
 
     // Center dot
     let dotRadius = size * 0.025

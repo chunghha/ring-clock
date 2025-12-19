@@ -10,35 +10,45 @@ struct ThemePreviewView: View {
         .foregroundColor(.secondary)
 
       HStack(spacing: 20) {
-        themeButton(name: "Base", scheme: "base", colors: [
-          Color(red: 0.2, green: 0.6, blue: 0.8),
-          Color(red: 0.8, green: 0.4, blue: 0.2),
-          Color(red: 0.4, green: 0.8, blue: 0.4)
-        ])
+        themeButton(
+          name: "Base", scheme: "base",
+          colors: [
+            Color(red: 0.2, green: 0.6, blue: 0.8),
+            Color(red: 0.8, green: 0.4, blue: 0.2),
+            Color(red: 0.4, green: 0.8, blue: 0.4),
+          ])
 
-        themeButton(name: "Moon", scheme: "moon", colors: [
-          Color(red: 0.9, green: 0.7, blue: 0.1, opacity: 0.6),
-          Color(red: 0.7, green: 0.4, blue: 0.1, opacity: 0.7),
-          Color(red: 0.1, green: 0.2, blue: 0.5, opacity: 0.5)
-        ])
+        themeButton(
+          name: "Moon", scheme: "moon",
+          colors: [
+            Color(red: 0.9, green: 0.7, blue: 0.1, opacity: 0.6),
+            Color(red: 0.7, green: 0.4, blue: 0.1, opacity: 0.7),
+            Color(red: 0.1, green: 0.2, blue: 0.5, opacity: 0.5),
+          ])
 
-        themeButton(name: "Ghost", scheme: "ghost", colors: [
-          Color(red: 0.0, green: 0.8, blue: 0.8, opacity: 0.8),
-          Color(red: 0.0, green: 1.0, blue: 0.4, opacity: 0.6),
-          Color(red: 0.4, green: 0.0, blue: 0.6, opacity: 0.7)
-        ])
+        themeButton(
+          name: "Ghost", scheme: "ghost",
+          colors: [
+            Color(red: 0.0, green: 0.8, blue: 0.8, opacity: 0.8),
+            Color(red: 0.0, green: 1.0, blue: 0.4, opacity: 0.6),
+            Color(red: 0.4, green: 0.0, blue: 0.6, opacity: 0.7),
+          ])
 
-        themeButton(name: "Gray", scheme: "gray", colors: [
-          Color(red: 0.6, green: 0.6, blue: 0.6, opacity: 0.8),
-          Color(red: 0.4, green: 0.4, blue: 0.4, opacity: 0.7),
-          Color(red: 0.8, green: 0.8, blue: 0.8, opacity: 0.6)
-        ])
+        themeButton(
+          name: "Gray", scheme: "gray",
+          colors: [
+            Color(red: 0.6, green: 0.6, blue: 0.6, opacity: 0.8),
+            Color(red: 0.4, green: 0.4, blue: 0.4, opacity: 0.7),
+            Color(red: 0.8, green: 0.8, blue: 0.8, opacity: 0.6),
+          ])
 
-        themeButton(name: "Vintage", scheme: "vintage", colors: [
-          Color(red: 0.75, green: 0.73, blue: 0.64, opacity: 0.6),
-          Color(red: 0.70, green: 0.68, blue: 0.58, opacity: 0.7),
-          Color(red: 0.80, green: 0.78, blue: 0.70, opacity: 0.8)
-        ])
+        themeButton(
+          name: "Vintage", scheme: "vintage",
+          colors: [
+            Color(red: 0.75, green: 0.73, blue: 0.64, opacity: 0.6),
+            Color(red: 0.70, green: 0.68, blue: 0.58, opacity: 0.7),
+            Color(red: 0.80, green: 0.78, blue: 0.70, opacity: 0.8),
+          ])
       }
     }
     .padding(.top, 10)
