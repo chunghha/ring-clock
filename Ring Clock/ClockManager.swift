@@ -22,6 +22,9 @@ class ClockManager: ObservableObject {
 
     // Animation state
     @Published var rotationAngle: Double = 0
+    @Published var rotationX: Double = 0  // 3D rotation around X axis
+    @Published var rotationY: Double = 0  // 3D rotation around Y axis
+    @Published var rotationZ: Double = 0  // 3D rotation around Z axis
     @Published var shouldAnimate: Bool = false
     private var lastMinute: Int = -1
 
@@ -398,11 +401,18 @@ class ClockManager: ObservableObject {
     }
 
     private func triggerMinuteAnimation() {
-        // Random direction: true for clockwise, false for counter-clockwise
-        let clockwise = Bool.random()
-        let targetAngle = clockwise ? rotationAngle + 360 : rotationAngle - 360
+        // Generate random 3D rotation angles
+        // X axis rotation: -40 to 40 degrees
+        let randomX = Double.random(in: -40...40)
+        // Y axis rotation: -40 to 40 degrees
+        let randomY = Double.random(in: -40...40)
+        // Z axis rotation: random full 360 rotation
+        let randomZ = Bool.random() ? 360.0 : -360.0
 
-        rotationAngle = targetAngle
+        // Animate to new angles
+        rotationX = randomX
+        rotationY = randomY
+        rotationZ = rotationZ + randomZ
         shouldAnimate = true
 
         // Reset animation flag after a short delay

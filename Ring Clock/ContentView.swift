@@ -46,8 +46,21 @@ struct ContentView: View {
         .padding(40)
         .opacity(clock.windowOpacity)
         .animation(.easeInOut(duration: 0.5), value: clock.colorScheme)
-        .rotationEffect(.degrees(clock.rotationAngle))
-        .animation(clock.shouldAnimate ? .easeInOut(duration: 1.0) : .none, value: clock.rotationAngle)
+        .rotation3DEffect(
+            .degrees(clock.rotationX),
+            axis: (1, 0, 0)
+        )
+        .rotation3DEffect(
+            .degrees(clock.rotationY),
+            axis: (0, 1, 0)
+        )
+        .rotation3DEffect(
+            .degrees(clock.rotationZ),
+            axis: (0, 0, 1)
+        )
+        .animation(clock.shouldAnimate ? .easeInOut(duration: 1.0) : .none, value: clock.rotationX)
+        .animation(clock.shouldAnimate ? .easeInOut(duration: 1.0) : .none, value: clock.rotationY)
+        .animation(clock.shouldAnimate ? .easeInOut(duration: 1.0) : .none, value: clock.rotationZ)
         .onHover { hovering in
             isHovering = hovering
         }
@@ -76,8 +89,21 @@ struct ContentView: View {
             .padding(20)
             .opacity(clock.windowOpacity)
             .animation(.easeInOut(duration: 0.5), value: clock.colorScheme)
-            .rotationEffect(.degrees(clock.rotationAngle))
-            .animation(clock.shouldAnimate ? .easeInOut(duration: 1.0) : .none, value: clock.rotationAngle)
+            .rotation3DEffect(
+                .degrees(clock.rotationX),
+                axis: (1, 0, 0)
+            )
+            .rotation3DEffect(
+                .degrees(clock.rotationY),
+                axis: (0, 1, 0)
+            )
+            .rotation3DEffect(
+                .degrees(clock.rotationZ),
+                axis: (0, 0, 1)
+            )
+            .animation(clock.shouldAnimate ? .easeInOut(duration: 1.0) : .none, value: clock.rotationX)
+            .animation(clock.shouldAnimate ? .easeInOut(duration: 1.0) : .none, value: clock.rotationY)
+            .animation(clock.shouldAnimate ? .easeInOut(duration: 1.0) : .none, value: clock.rotationZ)
         }
     }
 }
