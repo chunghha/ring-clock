@@ -25,12 +25,14 @@ struct SettingsView: View {
         Form {
             Section(header: Text("Color Scheme")) {
                 Picker("Theme", selection: $clock.colorScheme) {
-                    Text("Base").tag("base")
-                    Text("Moon").tag("moon")
-                    Text("Ghost in the Shell").tag("ghost")
-                    Text("Custom").tag("custom")
-                }
-                .pickerStyle(.segmented)
+                     Text("Base").tag("base")
+                     Text("Moon").tag("moon")
+                     Text("Ghost in the Shell").tag("ghost")
+                     Text("Gray").tag("gray")
+                     Text("Vintage").tag("vintage")
+                     Text("Custom").tag("custom")
+                 }
+                 .pickerStyle(.segmented)
 
                 // Theme Preview Section
                 VStack(alignment: .leading, spacing: 12) {
@@ -104,9 +106,53 @@ struct SettingsView: View {
                             }
                         }
                         .buttonStyle(.plain)
-                    }
-                }
-                .padding(.top, 10)
+
+                        // Gray Theme Preview
+                         Button(action: { clock.colorScheme = "gray" }) {
+                             VStack(spacing: 4) {
+                                 Text("Gray").font(.caption)
+                                 ZStack {
+                                     TimeRing(progress: 0.5, color: Color(red: 0.6, green: 0.6, blue: 0.6, opacity: 0.8), thickness: 20)
+                                         .frame(width: 60, height: 60)
+                                     TimeRing(progress: 0.3, color: Color(red: 0.4, green: 0.4, blue: 0.4, opacity: 0.7), thickness: 20)
+                                         .frame(width: 45, height: 45)
+                                     TimeRing(progress: 0.8, color: Color(red: 0.8, green: 0.8, blue: 0.8, opacity: 0.6), thickness: 20)
+                                         .frame(width: 30, height: 30)
+                                 }
+                             .frame(width: 70, height: 70)
+                             .background(
+                                 RoundedRectangle(cornerRadius: 8)
+                                     .stroke(clock.colorScheme == "gray" ? Color.accentColor : Color.clear, lineWidth: 3)
+                             )
+                             .padding(6)
+                             }
+                         }
+                         .buttonStyle(.plain)
+
+                        // Vintage Theme Preview
+                         Button(action: { clock.colorScheme = "vintage" }) {
+                             VStack(spacing: 4) {
+                                 Text("Vintage").font(.caption)
+                                 ZStack {
+                                     TimeRing(progress: 0.5, color: Color(red: 0.80, green: 0.78, blue: 0.70, opacity: 0.8), thickness: 20)
+                                         .frame(width: 60, height: 60)
+                                     TimeRing(progress: 0.3, color: Color(red: 0.70, green: 0.68, blue: 0.58, opacity: 0.7), thickness: 20)
+                                         .frame(width: 45, height: 45)
+                                     TimeRing(progress: 0.8, color: Color(red: 0.75, green: 0.73, blue: 0.64, opacity: 0.6), thickness: 20)
+                                         .frame(width: 30, height: 30)
+                                 }
+                             .frame(width: 70, height: 70)
+                             .background(
+                                 RoundedRectangle(cornerRadius: 8)
+                                     .stroke(clock.colorScheme == "vintage" ? Color.accentColor : Color.clear, lineWidth: 3)
+                             )
+                             .padding(6)
+                             }
+                         }
+                         .buttonStyle(.plain)
+                        }
+                        }
+                        .padding(.top, 10)
 
                 if clock.colorScheme == "custom" {
                     VStack(alignment: .leading, spacing: 10) {

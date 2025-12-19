@@ -93,6 +93,16 @@ class ClockManager: ObservableObject {
     private let ghostMinColor: Color = Color(NSColor(red: 0.0, green: 1.0, blue: 0.4, alpha: 0.6)) // Neon green
     private let ghostSecColor: Color = Color(NSColor(red: 0.4, green: 0.0, blue: 0.6, alpha: 0.7)) // Deep purple
 
+    // Gray color scheme - neutral, elegant aesthetic
+    private let grayHourColor: Color = Color(NSColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 0.8)) // Medium gray
+    private let grayMinColor: Color = Color(NSColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 0.7)) // Dark gray
+    private let graySecColor: Color = Color(NSColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 0.6)) // Light gray
+
+    // Vintage color scheme - aged paper aesthetic with warm yellow tone
+    private let vintageHourColor: Color = Color(NSColor(red: 0.80, green: 0.78, blue: 0.70, alpha: 0.8)) // Aged paper light
+    private let vintageMinColor: Color = Color(NSColor(red: 0.70, green: 0.68, blue: 0.58, alpha: 0.7)) // Aged paper medium (darkest)
+    private let vintageSecColor: Color = Color(NSColor(red: 0.75, green: 0.73, blue: 0.64, alpha: 0.6)) // Aged paper
+
     /// Custom color properties with improved error handling
     var customHourColor: Color {
         get {
@@ -201,6 +211,8 @@ class ClockManager: ObservableObject {
         switch colorScheme {
         case "moon": return moonHourColor
         case "ghost": return ghostHourColor
+        case "gray": return grayHourColor
+        case "vintage": return vintageHourColor
         case "custom": return customHourColor
         default: return basicHourColor
         }
@@ -209,6 +221,8 @@ class ClockManager: ObservableObject {
         switch colorScheme {
         case "moon": return moonMinColor
         case "ghost": return ghostMinColor
+        case "gray": return grayMinColor
+        case "vintage": return vintageMinColor
         case "custom": return customMinColor
         default: return basicMinColor
         }
@@ -217,6 +231,8 @@ class ClockManager: ObservableObject {
         switch colorScheme {
         case "moon": return moonSecColor
         case "ghost": return ghostSecColor
+        case "gray": return graySecColor
+        case "vintage": return vintageSecColor
         case "custom": return customSecColor
         default: return basicSecColor
         }
