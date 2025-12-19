@@ -84,7 +84,9 @@ func createClockIconPNG(size: Int) -> Data? {
     let center = CGPoint(x: cgSize / 2.0, y: cgSize / 2.0 + cgSize * 0.05)
     let radius = cgSize * 0.35
     
-    // Transparent background (already transparent from NSBitmapImageRep initialization)
+    // Lighter background (dark gray instead of black)
+    NSColor(white: 0.35, alpha: 1.0).setFill()
+    NSRect(x: 0, y: 0, width: cgSize, height: cgSize).fill()
     
     // Clock ring
     let ringPath = NSBezierPath()

@@ -29,16 +29,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Always show status bar for now (can be made configurable later)
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
 
-        if let button = statusItem?.button {
-            // Use the app's icon from the asset catalog
-            if let appIcon = NSImage(named: "AppIcon") {
-                button.image = appIcon
-            } else {
-                // Fallback to emoji if icon not found
-                button.title = "🕐"
+        if let statusItem = statusItem {
+            // Start updating the dynamic icon
+            DynamicIconGenerator.shared.startUpdatingIcon(for: statusItem)
+            
+            if let button = statusItem.button {
+                button.action = #selector(statusBarButtonClicked)
+                button.target = self
             }
-            button.action = #selector(statusBarButtonClicked)
-            button.target = self
         }
 
         let menu = NSMenu()
@@ -116,6 +114,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 
     @objc func quitApp() {
+        DynamicIconGenerator.shared.stopUpdating()
         NSApp.terminate(nil)
     }
 
