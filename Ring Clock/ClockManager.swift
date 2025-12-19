@@ -27,6 +27,7 @@ class ClockManager: ObservableObject {
     @Published var rotationZ: Double = 0  // 3D rotation around Z axis
     @Published var shouldAnimate: Bool = false
     private var lastMinute: Int = -1
+    private var lastAnimationTriggerSecond: Double = -1
 
     // Time zone preferences
     @AppStorage("selectedTimeZones") var selectedTimeZonesData: String = "[]"
@@ -408,12 +409,30 @@ class ClockManager: ObservableObject {
         self.minute = mins / 60.0
         self.hour = (hrs.truncatingRemainder(dividingBy: 12)) / 12.0
 
-        // Check for minute change to trigger animation
+        // Check for animation window (59 seconds onward) to trigger rotation animation
+        if isInAnimationWindow(second: secs) && lastAnimationTriggerSecond < 59.0 {
+            // Just entered the 59-second window - trigger animation
+            triggerMinuteAnimation()
+            lastAnimationTriggerSecond = secs
+        } else if !isInAnimationWindow(second: secs) {
+            // Left the animation window - reset for next minute
+            lastAnimationTriggerSecond = -1
+        }
+
+        // Check for minute change to trigger animation (legacy behavior)
         let currentMinute = components.minute ?? 0
         if currentMinute != lastMinute && lastMinute != -1 {
-            triggerMinuteAnimation()
+            // Only trigger if we haven't already triggered in the 59-second window
+            if lastAnimationTriggerSecond < 59.0 {
+                triggerMinuteAnimation()
+            }
         }
         lastMinute = currentMinute
+    }
+
+    /// Check if the current second is within the animation window (59 seconds onward)
+    func isInAnimationWindow(second: Double) -> Bool {
+        return second >= 59.0
     }
 
     private func triggerMinuteAnimation() {
