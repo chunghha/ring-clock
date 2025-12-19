@@ -17,7 +17,7 @@ struct SettingsView: View {
     "Europe/Berlin": "Berlin",
     "Asia/Tokyo": "Tokyo",
     "Asia/Shanghai": "Shanghai",
-    "Australia/Sydney": "Sydney"
+    "Australia/Sydney": "Sydney",
   ]
 
   var body: some View {

@@ -95,6 +95,10 @@ Central state management class handling:
 - **TimeZoneClock**: Individual time zone displays
 - **TimeRing**: Reusable ring component with shadow effects
 
+## Roadmap
+
+- [WIP] Rendering of clock arms per current local time
+
 ## Contributing
 
 1. Follow TDD: Write tests before implementation
