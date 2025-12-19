@@ -2,6 +2,12 @@
 
 A beautiful, customizable desktop clock application for macOS featuring animated rings that display the current time.
 
+## Screenshots
+
+| Main Clock Display | Settings Panel |
+|---|---|
+| ![Ring Clock](screenshots/ring-clock.png) | ![Settings](screenshots/settings.png) |
+
 ## Features
 
 ### Time Display
