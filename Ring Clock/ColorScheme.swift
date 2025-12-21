@@ -38,26 +38,26 @@ extension ClockManager {
   }
 
   var grayHourColor: Color {
-    Color(NSColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 0.8))
+    Color(NSColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 0.8))  // Middle gray
   }
 
   var grayMinColor: Color {
-    Color(NSColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 0.7))
+    Color(NSColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 0.8))  // Darkest gray
   }
 
   var graySecColor: Color {
-    Color(NSColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 0.6))
+    Color(NSColor(red: 0.85, green: 0.85, blue: 0.85, alpha: 0.7))  // Brightest gray
   }
 
   var vintageHourColor: Color {
-    Color(NSColor(red: 0.75, green: 0.73, blue: 0.64, alpha: 0.6))
+    Color(NSColor(red: 0.82, green: 0.78, blue: 0.68, alpha: 0.7))  // Old paper color
   }
 
   var vintageMinColor: Color {
-    Color(NSColor(red: 0.70, green: 0.68, blue: 0.58, alpha: 0.7))
+    Color(NSColor(red: 0.70, green: 0.65, blue: 0.40, alpha: 0.8))  // Yellowish brown
   }
 
   var vintageSecColor: Color {
-    Color(NSColor(red: 0.80, green: 0.78, blue: 0.70, alpha: 0.8))
+    Color(NSColor(red: 0.92, green: 0.80, blue: 0.72, alpha: 0.7))  // Brightest vintage peach
   }
 }
