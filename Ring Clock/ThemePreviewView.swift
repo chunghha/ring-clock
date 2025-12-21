@@ -45,9 +45,17 @@ struct ThemePreviewView: View {
         themeButton(
           name: "Vintage", scheme: "vintage",
           colors: [
-            Color(red: 0.75, green: 0.73, blue: 0.64, opacity: 0.6),
-            Color(red: 0.70, green: 0.68, blue: 0.58, opacity: 0.7),
-            Color(red: 0.80, green: 0.78, blue: 0.70, opacity: 0.8),
+            Color(red: 0.82, green: 0.78, blue: 0.68, opacity: 0.7),
+            Color(red: 0.70, green: 0.65, blue: 0.40, opacity: 0.8),
+            Color(red: 0.92, green: 0.80, blue: 0.72, opacity: 0.7),
+          ])
+
+        themeButton(
+          name: "Sage", scheme: "sage",
+          colors: [
+            Color(red: 0.65, green: 0.75, blue: 0.45, opacity: 0.8),
+            Color(red: 0.50, green: 0.60, blue: 0.30, opacity: 0.8),
+            Color(red: 0.85, green: 0.92, blue: 0.60, opacity: 0.8),
           ])
       }
     }

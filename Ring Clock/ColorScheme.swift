@@ -60,4 +60,16 @@ extension ClockManager {
   var vintageSecColor: Color {
     Color(NSColor(red: 0.92, green: 0.80, blue: 0.72, alpha: 0.7))  // Brightest vintage peach
   }
+
+  var sageHourColor: Color {
+    Color(NSColor(red: 0.65, green: 0.75, blue: 0.45, alpha: 0.8))  // Medium sage green
+  }
+
+  var sageMinColor: Color {
+    Color(NSColor(red: 0.50, green: 0.60, blue: 0.30, alpha: 0.8))  // Darkest olive green
+  }
+
+  var sageSecColor: Color {
+    Color(NSColor(red: 0.85, green: 0.92, blue: 0.60, alpha: 0.8))  // Bright lime yellow
+  }
 }

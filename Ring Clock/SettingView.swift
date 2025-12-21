@@ -30,6 +30,7 @@ struct SettingsView: View {
             Text("Ghost in the Shell").tag("ghost")
             Text("Gray").tag("gray")
             Text("Vintage").tag("vintage")
+            Text("Sage").tag("sage")
             Text("Custom").tag("custom")
           }
           .pickerStyle(.segmented)

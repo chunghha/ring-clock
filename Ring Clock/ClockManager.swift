@@ -203,6 +203,7 @@ class ClockManager: ObservableObject {
     case "ghost": return ghostHourColor
     case "gray": return grayHourColor
     case "vintage": return vintageHourColor
+    case "sage": return sageHourColor
     case "custom": return customHourColor
     default: return basicHourColor
     }
@@ -213,6 +214,7 @@ class ClockManager: ObservableObject {
     case "ghost": return ghostMinColor
     case "gray": return grayMinColor
     case "vintage": return vintageMinColor
+    case "sage": return sageMinColor
     case "custom": return customMinColor
     default: return basicMinColor
     }
@@ -223,6 +225,7 @@ class ClockManager: ObservableObject {
     case "ghost": return ghostSecColor
     case "gray": return graySecColor
     case "vintage": return vintageSecColor
+    case "sage": return sageSecColor
     case "custom": return customSecColor
     default: return basicSecColor
     }
