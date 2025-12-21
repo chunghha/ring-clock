@@ -17,6 +17,9 @@ struct ContentView: View {
           .accessibilityLabel("Minute ring")
           .accessibilityValue("\(clock.currentMinute) minutes past the hour")
 
+        // Minute dividers
+        HourDividers(color: clock.minColor, radius: 210, progress: clock.minute, divisions: 60)
+
         // Second Ring (Middle - Visible on hover or toggle)
         TimeRing(progress: clock.second, color: clock.secColor, thickness: clock.ringThickness)
           .frame(width: 325, height: 325)
@@ -25,11 +28,19 @@ struct ContentView: View {
           .accessibilityLabel("Second ring")
           .accessibilityValue("\(clock.currentSecond) seconds")
 
+        // Second dividers
+        HourDividers(color: clock.secColor, radius: 162.5, progress: clock.second, divisions: 60)
+          .opacity((isHovering || clock.showSeconds) ? 1 : 0)
+          .animation(.easeInOut(duration: 0.3), value: isHovering || clock.showSeconds)
+
         // Hour Ring (Inner)
         TimeRing(progress: clock.hour, color: clock.hourColor, thickness: clock.ringThickness)
           .frame(width: 240, height: 240)
           .accessibilityLabel("Hour ring")
           .accessibilityValue("\(clock.currentHour) o'clock")
+
+        // Hour dividers
+        HourDividers(color: clock.hourColor, radius: 120, progress: clock.hour)
 
         // Digital time overlay (optional)
         if clock.showDigitalTime {
