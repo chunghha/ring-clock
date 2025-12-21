@@ -20,6 +20,14 @@ struct ContentView: View {
         // Minute dividers
         HourDividers(color: clock.minColor, radius: 210, progress: clock.minute, divisions: 60)
 
+        // Minute progress dividers (subtle minute color on ring)
+        RingProgressDividers(
+          radius: 210, progress: clock.minute, divisions: 60, thickness: 2,
+          ringThickness: clock.ringThickness, color: clock.minColor.opacity(0.5))
+
+        // Minute progress marker
+        ProgressMarker(color: clock.minColor, radius: 210, progress: clock.minute, thickness: 2.5)
+
         // Second Ring (Middle - Visible on hover or toggle)
         TimeRing(progress: clock.second, color: clock.secColor, thickness: clock.ringThickness)
           .frame(width: 325, height: 325)
@@ -33,6 +41,19 @@ struct ContentView: View {
           .opacity((isHovering || clock.showSeconds) ? 1 : 0)
           .animation(.easeInOut(duration: 0.3), value: isHovering || clock.showSeconds)
 
+        // Second progress dividers (subtle second color on ring)
+        RingProgressDividers(
+          radius: 162.5, progress: clock.second, divisions: 60, thickness: 2,
+          ringThickness: clock.ringThickness, color: clock.secColor.opacity(0.5)
+        )
+        .opacity((isHovering || clock.showSeconds) ? 1 : 0)
+        .animation(.easeInOut(duration: 0.3), value: isHovering || clock.showSeconds)
+
+        // Second progress marker
+        ProgressMarker(color: clock.secColor, radius: 162.5, progress: clock.second, thickness: 2.5)
+          .opacity((isHovering || clock.showSeconds) ? 1 : 0)
+          .animation(.easeInOut(duration: 0.3), value: isHovering || clock.showSeconds)
+
         // Hour Ring (Inner)
         TimeRing(progress: clock.hour, color: clock.hourColor, thickness: clock.ringThickness)
           .frame(width: 240, height: 240)
@@ -41,6 +62,14 @@ struct ContentView: View {
 
         // Hour dividers
         HourDividers(color: clock.hourColor, radius: 120, progress: clock.hour)
+
+        // Hour progress dividers (subtle hour color on ring)
+        RingProgressDividers(
+          radius: 120, progress: clock.hour, divisions: 12, thickness: 2,
+          ringThickness: clock.ringThickness, color: clock.hourColor.opacity(0.5))
+
+        // Hour progress marker
+        ProgressMarker(color: clock.hourColor, radius: 120, progress: clock.hour, thickness: 2.5)
 
         // Digital time overlay (optional)
         if clock.showDigitalTime {
