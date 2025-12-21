@@ -84,19 +84,48 @@ class DynamicIconGenerator {
     let bgRect = NSRect(
       x: padding, y: padding, width: size - padding * 2, height: size - padding * 2)
 
-    // Dark gradient background
+    // Deep 3D shadow effect underneath
+    let shadowPath = NSBezierPath(roundedRect: bgRect, xRadius: cornerRadius, yRadius: cornerRadius)
+    NSColor(white: 0.0, alpha: 0.9).setFill()
+    shadowPath.fill()
+
+    // Dramatic gradient background with strong 3D depth
     let gradient = NSGradient(colors: [
-      NSColor(white: 0.15, alpha: 1.0),
-      NSColor(white: 0.25, alpha: 1.0),
+      NSColor(white: 0.02, alpha: 1.0),  // Very dark top
+      NSColor(white: 0.4, alpha: 1.0),  // Much lighter bottom for depth
     ])
     let bgPath = NSBezierPath(roundedRect: bgRect, xRadius: cornerRadius, yRadius: cornerRadius)
-    gradient?.draw(in: bgPath, angle: 45)
+    gradient?.draw(in: bgPath, angle: 90)  // Top to bottom for 3D effect
 
-    // Border highlight
-    let borderColor = NSColor(white: 0.35, alpha: 0.8)
+    // Bright inner highlight edge for beveled 3D effect
+    let innerPadding = size * 0.015
+    let innerRect = NSRect(
+      x: padding + innerPadding,
+      y: padding + innerPadding,
+      width: size - padding * 2 - innerPadding * 2,
+      height: size - padding * 2 - innerPadding * 2
+    )
+    let innerPath = NSBezierPath(
+      roundedRect: innerRect, xRadius: cornerRadius, yRadius: cornerRadius)
+    NSColor(white: 0.65, alpha: 0.9).setStroke()
+    innerPath.lineWidth = size * 0.008
+    innerPath.stroke()
+
+    // Dark outer border shadow for depth
+    let borderColor = NSColor(white: 0.0, alpha: 1.0)
     borderColor.setStroke()
-    bgPath.lineWidth = size * 0.01
+    bgPath.lineWidth = size * 0.016
     bgPath.stroke()
+
+    // Top highlight edge for gloss effect
+    let topHighlightPath = NSBezierPath(
+      roundedRect:
+        NSRect(
+          x: padding + size * 0.01, y: padding + size * 0.01,
+          width: size - padding * 2 - size * 0.02, height: size * 0.028),
+      xRadius: cornerRadius * 0.6, yRadius: cornerRadius * 0.6)
+    NSColor(white: 1.0, alpha: 0.5).setFill()
+    topHighlightPath.fill()
   }
 
   private func drawIconClockElements(size: CGFloat) {
@@ -119,19 +148,35 @@ class DynamicIconGenerator {
     // Draw tick marks
     drawTickMarks(center: center, radius: radius, size: size)
 
-    // Clock ring outer glow
-    let glowPath = NSBezierPath()
-    glowPath.appendArc(withCenter: center, radius: radius, startAngle: 0, endAngle: 360)
-    glowPath.lineWidth = size * 0.045
-    NSColor(white: 1.0, alpha: 0.15).setStroke()
-    glowPath.stroke()
+    // Clock ring deep shadow (3D depth layer 1)
+    let deepShadowPath = NSBezierPath()
+    deepShadowPath.appendArc(withCenter: center, radius: radius, startAngle: 0, endAngle: 360)
+    deepShadowPath.lineWidth = size * 0.055
+    NSColor(white: 0.0, alpha: 0.8).setStroke()
+    deepShadowPath.stroke()
 
-    // Clock ring main
+    // Clock ring medium shadow (3D depth layer 2)
+    let shadowRingPath = NSBezierPath()
+    shadowRingPath.appendArc(
+      withCenter: center, radius: radius - size * 0.006, startAngle: 0, endAngle: 360)
+    shadowRingPath.lineWidth = size * 0.04
+    NSColor(white: 0.0, alpha: 0.4).setStroke()
+    shadowRingPath.stroke()
+
+    // Clock ring main (bright highlight)
     let ringPath = NSBezierPath()
     ringPath.appendArc(withCenter: center, radius: radius, startAngle: 0, endAngle: 360)
     ringPath.lineWidth = size * 0.035
     NSColor.white.setStroke()
     ringPath.stroke()
+
+    // Clock ring bright inner highlight (3D gloss)
+    let innerGlossPath = NSBezierPath()
+    innerGlossPath.appendArc(
+      withCenter: center, radius: radius - size * 0.008, startAngle: 0, endAngle: 360)
+    innerGlossPath.lineWidth = size * 0.012
+    NSColor(white: 1.0, alpha: 0.7).setStroke()
+    innerGlossPath.stroke()
 
     // Hour hand (shorter, thicker) with shadow
     drawHandShadow(
@@ -177,8 +222,21 @@ class DynamicIconGenerator {
         color: .systemRed
       ))
 
-    // Center dot with glow
-    let dotOuterRadius = size * 0.035
+    // Center dot deep shadow (3D depth)
+    let dotShadowRadius = size * 0.03
+    let dotShadowPath = NSBezierPath(
+      ovalIn: NSRect(
+        x: center.x - dotShadowRadius + size * 0.005,
+        y: center.y - dotShadowRadius + size * 0.005,
+        width: dotShadowRadius * 2,
+        height: dotShadowRadius * 2
+      )
+    )
+    NSColor(white: 0.0, alpha: 0.8).setFill()
+    dotShadowPath.fill()
+
+    // Center dot outer glow - dark shadow
+    let dotOuterRadius = size * 0.038
     let dotOuterPath = NSBezierPath(
       ovalIn: NSRect(
         x: center.x - dotOuterRadius,
@@ -187,9 +245,10 @@ class DynamicIconGenerator {
         height: dotOuterRadius * 2
       )
     )
-    NSColor(white: 1.0, alpha: 0.3).setFill()
+    NSColor(white: 0.0, alpha: 0.6).setFill()
     dotOuterPath.fill()
 
+    // Center dot main sphere
     let dotRadius = size * 0.025
     let dotPath = NSBezierPath(
       ovalIn: NSRect(
@@ -199,8 +258,42 @@ class DynamicIconGenerator {
         height: dotRadius * 2
       )
     )
-    NSColor.white.setFill()
-    dotPath.fill()
+    // Radial gradient for dramatic 3D sphere effect
+    if let sphereGradient = NSGradient(colors: [
+      NSColor.white,
+      NSColor(white: 0.6, alpha: 1.0),
+    ]) {
+      sphereGradient.draw(in: dotPath, angle: 135)
+    } else {
+      NSColor.white.setFill()
+      dotPath.fill()
+    }
+
+    // Primary dot highlight (bright 3D shine)
+    let dotHighlightRadius = size * 0.009
+    let dotHighlightPath = NSBezierPath(
+      ovalIn: NSRect(
+        x: center.x - dotHighlightRadius - size * 0.007,
+        y: center.y - dotHighlightRadius - size * 0.007,
+        width: dotHighlightRadius * 2,
+        height: dotHighlightRadius * 2
+      )
+    )
+    NSColor(white: 1.0, alpha: 1.0).setFill()
+    dotHighlightPath.fill()
+
+    // Secondary subtle highlight for extra gloss
+    let dotHighlight2Radius = size * 0.004
+    let dotHighlight2Path = NSBezierPath(
+      ovalIn: NSRect(
+        x: center.x - dotHighlight2Radius + size * 0.003,
+        y: center.y - dotHighlight2Radius + size * 0.003,
+        width: dotHighlight2Radius * 2,
+        height: dotHighlight2Radius * 2
+      )
+    )
+    NSColor(white: 1.0, alpha: 0.7).setFill()
+    dotHighlight2Path.fill()
   }
 
   private func drawTickMarks(center: CGPoint, radius: CGFloat, size: CGFloat) {
@@ -236,16 +329,28 @@ class DynamicIconGenerator {
     let angleInRadians = config.angle * .pi / 180
     let handLength = config.length * config.radius
 
-    let shadowOffset = size * 0.005
+    // Primary drop shadow - strong
+    let shadowOffset = size * 0.012
     let endX = config.center.x + handLength * sin(angleInRadians) + shadowOffset
     let endY = config.center.y - handLength * cos(angleInRadians) + shadowOffset
 
     let path = NSBezierPath()
     path.move(to: NSPoint(x: config.center.x + shadowOffset, y: config.center.y + shadowOffset))
     path.line(to: NSPoint(x: endX, y: endY))
-    path.lineWidth = config.width
-    NSColor(white: 0.0, alpha: 0.3).setStroke()
+    path.lineWidth = config.width + size * 0.01
+    NSColor(white: 0.0, alpha: 0.9).setStroke()
     path.stroke()
+
+    // Secondary shadow layer
+    let shadowOffset2 = size * 0.006
+    let endX2 = config.center.x + handLength * sin(angleInRadians) + shadowOffset2
+    let endY2 = config.center.y - handLength * cos(angleInRadians) + shadowOffset2
+    let path2 = NSBezierPath()
+    path2.move(to: NSPoint(x: config.center.x + shadowOffset2, y: config.center.y + shadowOffset2))
+    path2.line(to: NSPoint(x: endX2, y: endY2))
+    path2.lineWidth = config.width
+    NSColor(white: 0.0, alpha: 0.4).setStroke()
+    path2.stroke()
   }
 
   private func drawHand(_ config: HandConfig) {
